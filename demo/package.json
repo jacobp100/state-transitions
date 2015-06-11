@@ -1,0 +1,27 @@
+{
+  "name": "animations-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^3.9.3",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3"
+  },
+  "devDependencies": {
+    "babel": "^5.5.6",
+    "babel-core": "^5.5.6",
+    "babel-loader": "^5.1.4",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^2.3.1",
+    "gulp-sass": "^2.0.1",
+    "gulp-util": "^3.0.5",
+    "json-loader": "^0.5.2",
+    "webpack": "^1.9.10"
+  }
+}

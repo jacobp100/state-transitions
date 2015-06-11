@@ -1,0 +1,226 @@
+body {
+  margin: 0; }
+
+.search, .link-view__search {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  width: 100%;
+  font: 400 1.618rem "Helvetica", "Arimo", "Arial", "sans";
+  background: #ECF0F1;
+  color: #7F8C8D; }
+
+.link-view {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-animation: 0.6s fade-in ease-in;
+  animation: 0.6s fade-in ease-in; }
+  .link-view--leaving {
+    -webkit-animation: 0.6s fade-out ease-in;
+    animation: 0.6s fade-out ease-in; }
+
+.link {
+  display: inline-block;
+  margin: 1rem;
+  width: 100px;
+  overflow: visible;
+  text-decoration: none; }
+  .link__image-frame {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px; }
+  .link__name {
+    display: block;
+    padding: 0.618rem 0;
+    color: white;
+    font: 900 0.618rem "Helvetica", "Arimo", "Arial", "sans";
+    text-align: center;
+    text-transform: uppercase; }
+
+.image-frame__image {
+  -webkit-flex: none;
+  -ms-flex: none;
+  flex: none;
+  z-index: 1; }
+
+.view {
+  position: fixed;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0; }
+  .view__details {
+    padding: 2.618rem;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+
+.details__image {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 400px;
+  z-index: 1; }
+
+.details__details-container {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  overflow: scroll; }
+
+.back {
+  display: block;
+  padding: 2.618rem;
+  text-align: center;
+  color: white;
+  font: 2.618rem "Helvetica", "Arimo", "Arial", "sans";
+  text-decoration: none;
+  z-index: 1; }
+
+.details-table__title, .details-table__value {
+  font: 1.618rem "Helvetica", "Arimo", "Arial", "sans";
+  vertical-align: top; }
+
+.details-table {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border: 0;
+  border-spacing: 1rem;
+  vertical-align: top; }
+  .details-table__title {
+    font-weight: 100;
+    text-align: right; }
+  .details-table__value {
+    font-weight: 700; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; } }
+
+@-webkit-keyframes fade-out {
+  100% {
+    opacity: 0; } }
+
+@keyframes fade-out {
+  100% {
+    opacity: 0; } }
+
+.image-frame--poison, .view--poison, .back--poison {
+  color: white; }
+
+.image-frame--ghost, .view--ghost, .back--ghost {
+  color: white; }
+
+.image-frame--rock, .view--rock, .back--rock {
+  color: white; }
+
+.image-frame--normal, .view--normal {
+  background: #ECF0F1; }
+
+.image-frame--fire, .view--fire {
+  background: #E47E30; }
+
+.image-frame--grass, .view--grass {
+  background: #A6C446; }
+
+.image-frame--water, .view--water {
+  background: #3A99D8; }
+
+.image-frame--ice, .view--ice {
+  background: #B9CAF0; }
+
+.image-frame--electric, .view--electric {
+  background: #FECC2F; }
+
+.image-frame--poison, .view--poison {
+  background: #5D355D; }
+
+.image-frame--ground, .view--ground {
+  background: #EFDDB6; }
+
+.image-frame--bug, .view--bug {
+  background: #ED727C; }
+
+.image-frame--psychic, .view--psychic {
+  background: #9A5CB4; }
+
+.image-frame--fighting, .view--fighting {
+  background: #3C6F80; }
+
+.image-frame--ghost, .view--ghost {
+  background: #2B2B2B; }
+
+.image-frame--rock, .view--rock {
+  background: #5D4535; }
+
+.image-frame--dragon, .view--dragon {
+  background: #E54D42; }
+
+.name--normal, .back--normal {
+  background: #BDC3C7; }
+
+.name--fire, .back--fire {
+  background: #D15419; }
+
+.name--grass, .back--grass {
+  background: #8FAF30; }
+
+.name--water, .back--water {
+  background: #2F81B7; }
+
+.name--ice, .back--ice {
+  background: #9AACD3; }
+
+.name--electric, .back--electric {
+  background: #FDA729; }
+
+.name--poison, .back--poison {
+  background: #4E2C4E; }
+
+.name--ground, .back--ground {
+  background: #D4C197; }
+
+.name--bug, .back--bug {
+  background: #D7555C; }
+
+.name--psychic, .back--psychic {
+  background: #8D48AB; }
+
+.name--fighting, .back--fighting {
+  background: #376271; }
+
+.name--ghost, .back--ghost {
+  background: #262626; }
+
+.name--rock, .back--rock {
+  background: #503B2D; }
+
+.name--dragon, .back--dragon {
+  background: #BE3A31; }

@@ -1,0 +1,21 @@
+{
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true
+	},
+	"ecmaFeatures": {
+		"jsx": true
+	},
+	"globals": {
+		"DEBUG": true
+	},
+	"rules": {
+		"quotes": [1, "single", "avoid-escape"],
+		"no-use-before-define": ["nofunc"],
+		"no-shadow": [false],
+		"no-labels": [false],
+		"no-wrap-func": [false],
+		"no-inner-declarations": [false]
+	}
+}
