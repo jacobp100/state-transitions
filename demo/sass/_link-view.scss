@@ -1,0 +1,7 @@
+.link-view {
+	animation: 0.6s fade-in ease-in;
+
+	&--leaving {
+		animation: 0.6s fade-out ease-in;
+	}
+}

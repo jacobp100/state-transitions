@@ -14,6 +14,7 @@ const { Route, DefaultRoute, RouteHandler, Link } = Router;
 const List = React.createClass({
 	mixins: [TweenState, TransitionInOut],
 	animateOutClassName: 'link-view--leaving',
+	transitionEndTime: -1,
 	getInitialState() {
 		return {
 			search: ''
@@ -31,19 +32,23 @@ const List = React.createClass({
 			.pick(({ name }) => (
 				_.includes(name.toLowerCase(), search)
 			)).mapValues(({ name, type }, id) => (
-			<Link key={ id } className={ `link` } to={ 'view' } params={{ id }}>
-				<div ref={ `poke-${id}-frame` } className={ `link__image-frame image-frame--${type}` }>
-					<img ref={ `poke-${id}-image` } className='image-frame__image' src={ `img/${id}.png` } />
-				</div>
-				<span ref={ `poke-${id}-label` } className={ `link__name name--${type}` }>
-					{ name }
-				</span>
-			</Link>
-		)).value();
+				<Link key={ id } className={ `icon` } to={ 'view' } params={{ id }}>
+					<div ref={ `poke-${id}-frame` } className={ `frame frame--${type}` }>
+						<div className='frame__body image-container'>
+							<img ref={ `poke-${id}-image` } className='image-container__image' src={ `img/${id}.png` } />
+						</div>
+						<span ref={ `poke-${id}-label` } className={ `label label--${type}` }>
+							{ name }
+						</span>
+					</div>
+				</Link>
+			))
+			.values()
+			.value();
 
 		return (
 			<div className='link-view'>
-				<input type='text' className='link-view__search' placeholder='Search&hellip;' onChange={ this.onChange } />
+				<input type='text' className='search' placeholder='Search&hellip;' onChange={ this.onChange } />
 				<div className='link-view__items'>
 					{ pokeItems }
 				</div>
@@ -54,6 +59,7 @@ const List = React.createClass({
 
 const View = React.createClass({
 	mixins: [TweenState],
+	transitionEndTime: -1,
 	render() {
 		var { id } = this.props.params;
 
@@ -93,44 +99,46 @@ const View = React.createClass({
 		}
 
 		return (
-			<div ref={ `poke-${id}-frame` } className={ `view view--${type}` }>
-				<div className='view__details'>
-					<img ref={ `poke-${id}-image` } className='details__image' src={ `img/${id}.png` } />
-					<div className='details__details-container'>
-						<table className='details-table'>
-							<tr>
-								<td className='details-table__title'>Name</td>
-								<td className='details-table__value'>{ name }</td>
-							</tr>
-							<tr>
-								<td className='details-table__title'>Type</td>
-								<td className='details-table__value'>{ _.capitalize(type) }</td>
-							</tr>
-							<tr>
-								<td className='details-table__title'>Attack</td>
-								<td className='details-table__value'>{ attack }</td>
-							</tr>
-							<tr>
-								<td className='details-table__title'>Defense</td>
-								<td className='details-table__value'>{ defense }</td>
-							</tr>
-							{ levelsElement }
-							{ evolveElement }
-							<tr>
-								<td className='details-table__title'>Moves</td>
-								<td className='details-table__value'>{ moves.map(_.capitalize).join(', ') }</td>
-							</tr>
-							{ probabilityElement }
-							<tr>
-								<td className='details-table__title'>Curve</td>
-								<td className='details-table__value'>{ curve }</td>
-							</tr>
-						</table>
+			<div ref={ `poke-${id}-frame` } className={ `view` }>
+				<div className={ `view__frame frame--${type}` }>
+					<div className={ `details` }>
+						<img ref={ `poke-${id}-image` } className='details__image' src={ `img/${id}.png` } />
+						<div className='details__details-container'>
+							<table className='details-table'>
+								<tr>
+									<td className='details-table__title'>Name</td>
+									<td className='details-table__value'>{ name }</td>
+								</tr>
+								<tr>
+									<td className='details-table__title'>Type</td>
+									<td className='details-table__value'>{ _.capitalize(type) }</td>
+								</tr>
+								<tr>
+									<td className='details-table__title'>Attack</td>
+									<td className='details-table__value'>{ attack }</td>
+								</tr>
+								<tr>
+									<td className='details-table__title'>Defense</td>
+									<td className='details-table__value'>{ defense }</td>
+								</tr>
+								{ levelsElement }
+								{ evolveElement }
+								<tr>
+									<td className='details-table__title'>Moves</td>
+									<td className='details-table__value'>{ moves.map(_.capitalize).join(', ') }</td>
+								</tr>
+								{ probabilityElement }
+								<tr>
+									<td className='details-table__title'>Curve</td>
+									<td className='details-table__value'>{ curve }</td>
+								</tr>
+							</table>
+						</div>
 					</div>
+					<Link ref={ `poke-${id}-label` } className={ `label label--huge label--${type}` } to='app'>
+						Back
+					</Link>
 				</div>
-				<Link ref={ `poke-${id}-label` } className={ `back back--${type}` } to='app'>
-					Back
-				</Link>
 			</div>
 		);
 	}

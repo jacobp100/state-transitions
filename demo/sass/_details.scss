@@ -1,0 +1,23 @@
+@import 'image';
+
+.details {
+	padding: $mod-2;
+	display: flex;
+	flex: 1;
+	overflow-y: auto;
+
+	&__image {
+		@extend .image !optional;
+
+		align-self: center;
+		width: 400px;
+		z-index: 1;
+	}
+
+	&__details-container {
+		@extend .details-container !optional;
+
+		flex: 1;
+		overflow-y: scroll;
+	}
+}

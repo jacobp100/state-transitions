@@ -77,6 +77,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		mixins: [TweenState, TransitionInOut],
 		animateOutClassName: 'link-view--leaving',
+		transitionEndTime: -1,
 		getInitialState: function getInitialState() {
 			return {
 				search: ''
@@ -98,24 +99,28 @@ return /******/ (function(modules) { // webpackBootstrap
 				var type = _ref2.type;
 				return React.createElement(
 					Link,
-					{ key: id, className: 'link', to: 'view', params: { id: id } },
+					{ key: id, className: 'icon', to: 'view', params: { id: id } },
 					React.createElement(
 						'div',
-						{ ref: 'poke-' + id + '-frame', className: 'link__image-frame image-frame--' + type },
-						React.createElement('img', { ref: 'poke-' + id + '-image', className: 'image-frame__image', src: 'img/' + id + '.png' })
-					),
-					React.createElement(
-						'span',
-						{ ref: 'poke-' + id + '-label', className: 'link__name name--' + type },
-						name
+						{ ref: 'poke-' + id + '-frame', className: 'frame frame--' + type },
+						React.createElement(
+							'div',
+							{ className: 'frame__body image-container' },
+							React.createElement('img', { ref: 'poke-' + id + '-image', className: 'image-container__image', src: 'img/' + id + '.png' })
+						),
+						React.createElement(
+							'span',
+							{ ref: 'poke-' + id + '-label', className: 'label label--' + type },
+							name
+						)
 					)
 				);
-			}).value();
+			}).values().value();
 	
 			return React.createElement(
 				'div',
 				{ className: 'link-view' },
-				React.createElement('input', { type: 'text', className: 'link-view__search', placeholder: 'Search…', onChange: this.onChange }),
+				React.createElement('input', { type: 'text', className: 'search', placeholder: 'Search…', onChange: this.onChange }),
 				React.createElement(
 					'div',
 					{ className: 'link-view__items' },
@@ -129,6 +134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		displayName: 'View',
 	
 		mixins: [TweenState],
+		transitionEndTime: -1,
 		render: function render() {
 			var id = this.props.params.id;
 			var _pokemon$id = pokemon[id];
@@ -211,111 +217,115 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			return React.createElement(
 				'div',
-				{ ref: 'poke-' + id + '-frame', className: 'view view--' + type },
+				{ ref: 'poke-' + id + '-frame', className: 'view' },
 				React.createElement(
 					'div',
-					{ className: 'view__details' },
-					React.createElement('img', { ref: 'poke-' + id + '-image', className: 'details__image', src: 'img/' + id + '.png' }),
+					{ className: 'view__frame frame--' + type },
 					React.createElement(
 						'div',
-						{ className: 'details__details-container' },
+						{ className: 'details' },
+						React.createElement('img', { ref: 'poke-' + id + '-image', className: 'details__image', src: 'img/' + id + '.png' }),
 						React.createElement(
-							'table',
-							{ className: 'details-table' },
+							'div',
+							{ className: 'details__details-container' },
 							React.createElement(
-								'tr',
-								null,
+								'table',
+								{ className: 'details-table' },
 								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Name'
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Name'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										name
+									)
 								),
 								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									name
-								)
-							),
-							React.createElement(
-								'tr',
-								null,
-								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Type'
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Type'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										_.capitalize(type)
+									)
 								),
 								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									_.capitalize(type)
-								)
-							),
-							React.createElement(
-								'tr',
-								null,
-								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Attack'
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Attack'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										attack
+									)
 								),
 								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									attack
-								)
-							),
-							React.createElement(
-								'tr',
-								null,
-								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Defense'
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Defense'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										defense
+									)
 								),
+								levelsElement,
+								evolveElement,
 								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									defense
-								)
-							),
-							levelsElement,
-							evolveElement,
-							React.createElement(
-								'tr',
-								null,
-								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Moves'
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Moves'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										moves.map(_.capitalize).join(', ')
+									)
 								),
+								probabilityElement,
 								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									moves.map(_.capitalize).join(', ')
-								)
-							),
-							probabilityElement,
-							React.createElement(
-								'tr',
-								null,
-								React.createElement(
-									'td',
-									{ className: 'details-table__title' },
-									'Curve'
-								),
-								React.createElement(
-									'td',
-									{ className: 'details-table__value' },
-									curve
+									'tr',
+									null,
+									React.createElement(
+										'td',
+										{ className: 'details-table__title' },
+										'Curve'
+									),
+									React.createElement(
+										'td',
+										{ className: 'details-table__value' },
+										curve
+									)
 								)
 							)
 						)
+					),
+					React.createElement(
+						Link,
+						{ ref: 'poke-' + id + '-label', className: 'label label--huge label--' + type, to: 'app' },
+						'Back'
 					)
-				),
-				React.createElement(
-					Link,
-					{ ref: 'poke-' + id + '-label', className: 'back back--' + type, to: 'app' },
-					'Back'
 				)
 			);
 		}
@@ -36095,26 +36105,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _ = __webpack_require__(200);
 	
 	var TRANSITION_BODY_TIME = 0.6;
-	var TRANSITION_END_TIME = 0.1;
+	var TRANSITION_END_TIME = 0;
+	var ANIMATE_OUT_CLASS_NAME = 'leaving';
 	var REACT_ID_RE = /(<[^>]+)(data-reactid)([^>]*>)/gm;
 	var OPACITY_MANAGED_BY_TWEEN = 'data-opacity-managed';
 	
 	var elementComunicator = new events.EventEmitter();
+	elementComunicator.setMaxListeners(101);
+	
+	function requestNextAnimationFrame(callback) {
+		requestAnimationFrame(function () {
+			requestAnimationFrame(callback);
+		});
+	}
 	
 	function createClone(_ref) {
 		var outerHTML = _ref.outerHTML;
 		var rect = _ref.rect;
 	
+		// Creates a clone that fits exactly in the space that the previous element used
 		var container = document.createElement('div');
 		container.innerHTML = outerHTML;
 	
 		var element = container.firstChild;
 	
 		element.style.position = 'absolute';
+		// Margin isn't included in getBoundingClientRect, so we have to clear it
 		element.style.margin = '0';
+		// Content, padding, and border sizes are, so we have to use border-box sizing
 		element.style.boxSizing = 'border-box';
 		element.style.top = window.scrollY + 'px';
-		element.style.left = window.scrollY + 'px';
+		element.style.left = window.scrollX + 'px';
+		// If they set a max dimension with content-box sizing, it will change when we use box-sizing, so we have to clear these
 		element.style.maxWidth = 'none';
 		element.style.maxHeight = 'none';
 		element.style.width = rect.width + 'px';
@@ -36123,18 +36145,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		return element;
 	}
 	
-	function requestNextAnimationFrame(callback) {
-		requestAnimationFrame(function () {
-			requestAnimationFrame(callback);
-		});
-	}
-	
 	function serializeNode(node, ref) {
+		// Serialize a node in a form that createClone will use
 		var element = React.findDOMNode(node);
-	
 		var rect = element.getBoundingClientRect();
 	
-		// Sigh
+		// Set input state values to HTML values so they don't change when creating the clone
 		_.forEach(element.getElementsByTagName('input'), function (input) {
 			input.setAttribute('value', input.value);
 		});
@@ -36142,6 +36158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			textarea.innerHTML = textarea.value;
 		});
 	
+		// React will pick up on the ids of the clone and get confused, so change them
 		var outerHTML = element.outerHTML.replace(REACT_ID_RE, '$1data-_reactid$3');
 	
 		return {
@@ -36149,165 +36166,212 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	}
 	
-	function animateElements(fromRefs, toRefs, originalElements) {
-		var container = document.createElement('div');
+	function animateElement(_ref2) {
+		var container = _ref2.container;
+		var toRect = _ref2.toRect;
+		var fromRect = _ref2.fromRect;
+		var originalElem = _ref2.originalElem;
+		var toElem = _ref2.toElem;
+		var fromElem = _ref2.fromElem;
+		var transitionBodyTime = _ref2.transitionBodyTime;
+		var transitionEndTime = _ref2.transitionEndTime;
+		var callback = _ref2.callback;
+		var triggerAnimationCallback = _ref2.triggerAnimationCallback;
 	
-		var sharedKeys = _.intersection(_.keys(fromRefs), _.keys(toRefs));
+		// To animate components, set initial scales, opacities, and transitions on the elements, and in the next frame, add the new initial scales and opacities.
+		var scaleX = fromRect.width / toRect.width;
+		var scaleY = fromRect.height / toRect.height;
 	
-		var elementAnimationFinish = _.after(sharedKeys.length, function removeContainer() {
-			container.remove();
+		var transition = 'all ' + transitionBodyTime + 's ease-in-out';
+		var translate = 'translate(' + fromRect.left + 'px, ' + fromRect.top + 'px)';
+		var fromTransform = '' + translate + ' scale(1, 1)';
+		var toTransform = '' + translate + ' scale(' + scaleX + ', ' + scaleY + ')';
+	
+		var sharedStyles = {
+			transition: transition,
+			transformOrigin: '0 0',
+			webkitTransformOrigin: '0 0'
+		};
+	
+		var fromStyles = {
+			transform: fromTransform,
+			webkitTransform: fromTransform
+		};
+	
+		var toStyles = {
+			transform: toTransform,
+			webkitTransform: toTransform,
+			opacity: 0
+		};
+	
+		originalElem.style.opacity = 0;
+		originalElem.setAttribute(OPACITY_MANAGED_BY_TWEEN, 'true');
+	
+		_.assign(fromElem.style, sharedStyles, fromStyles);
+		_.assign(toElem.style, sharedStyles, toStyles);
+	
+		requestNextAnimationFrame(function () {
+			var scaleX = toRect.width / fromElem.offsetWidth;
+			var scaleY = toRect.height / fromElem.offsetHeight;
+	
+			var toTranslate = 'translate(' + toRect.left + 'px, ' + toRect.top + 'px)';
+			var toTransform = '' + toTranslate + ' scale(1, 1)';
+			var fromTransform = '' + toTranslate + ' scale(' + scaleX + ', ' + scaleY + ')';
+	
+			var fromStyles = {
+				transform: fromTransform,
+				webkitTransform: fromTransform
+			};
+	
+			var toStyles = {
+				transform: toTransform,
+				webkitTransform: toTransform,
+				opacity: ''
+			};
+	
+			_.assign(fromElem.style, fromStyles);
+			_.assign(toElem.style, toStyles);
 		});
 	
-		_.forEach(sharedKeys, function (key) {
-			var to = toRefs[key];
-			var from = fromRefs[key];
-			var originalElement = React.findDOMNode(originalElements[key]);
+		toElem.addEventListener('transitionend', function fadeOutToElement() {
+			originalElem.style.opacity = '';
+			toElem.removeEventListener('transitionend', fadeOutToElement);
+			fromElem.remove();
+			triggerAnimationCallback();
 	
-			var fromElem = createClone(from);
-			var toElem = createClone(to);
+			if (transitionEndTime > 0.01) {
+				// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
+				toElem.style.transition = 'opacity ' + transitionEndTime + 's ease-in';
+				toElem.style.pointerEvents = 'none';
 	
-			if (String(fromElem.style.opacity) === '0') {
-				// Two quick successive navigations can cause glitches
-				originalElement.style.opacity = '';
-				toElem.style.opacity = '';
-				fromElem.style.opacity = '';
-				elementAnimationFinish();
+				requestNextAnimationFrame(function () {
+					toElem.addEventListener('transitionend', function removeContainer() {
+						// Probably not needed, best to be safe
+						toElem.removeEventListener('transitionend', removeContainer);
+						toElem.remove();
+	
+						elementComunicator.removeListener('animating-to', removeAnimatingToElements);
+						elementComunicator.removeListener('animating-from', removeAnimatingFromElements);
+	
+						callback();
+					});
+	
+					toElem.style.opacity = 0;
+				});
 			} else {
-				var scaleX;
-				var scaleY;
-				var transition;
-				var translate;
-				var fromTransform;
-				var toTransform;
-				var sharedStyles;
-				var fromStyles;
-				var toStyles;
-	
-				(function () {
-	
-					// Function-block ES6 syntax
-	
-					var removeAnimatingToElements = function (id) {
-						_.forEach(toElem.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
-							if (element !== toElem) {
-								element.style.opacity = 0;
-							}
-						});
-					};
-	
-					var removeAnimatingFromElements = function (id) {
-						_.forEach(fromElem.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
-							if (element !== fromElem) {
-								element.style.opacity = 0;
-							}
-						});
-					};
-	
-					scaleX = from.rect.width / to.rect.width;
-					scaleY = from.rect.height / to.rect.height;
-					transition = 'all ' + TRANSITION_BODY_TIME + 's ease-in-out';
-					translate = 'translate(' + from.rect.left + 'px, ' + from.rect.top + 'px)';
-					fromTransform = '' + translate + ' scale(1, 1)';
-					toTransform = '' + translate + ' scale(' + scaleX + ', ' + scaleY + ')';
-					sharedStyles = {
-						transition: transition,
-						transformOrigin: '0 0',
-						webkitTransformOrigin: '0 0'
-					};
-					fromStyles = {
-						transform: fromTransform,
-						webkitTransform: fromTransform
-					};
-					toStyles = {
-						transform: toTransform,
-						webkitTransform: toTransform,
-						opacity: 0
-					};
-	
-					originalElement.style.opacity = 0;
-					originalElement.setAttribute(OPACITY_MANAGED_BY_TWEEN, 'true');
-	
-					_.assign(fromElem.style, sharedStyles, fromStyles);
-					_.assign(toElem.style, sharedStyles, toStyles);
-	
-					requestNextAnimationFrame(function () {
-						var scaleX = to.rect.width / fromElem.offsetWidth;
-						var scaleY = to.rect.height / fromElem.offsetHeight;
-	
-						var toTranslate = 'translate(' + to.rect.left + 'px, ' + to.rect.top + 'px)';
-						var toTransform = '' + toTranslate + ' scale(1, 1)';
-						var fromTransform = '' + toTranslate + ' scale(' + scaleX + ', ' + scaleY + ')';
-	
-						var fromStyles = {
-							transform: fromTransform,
-							webkitTransform: fromTransform
-						};
-	
-						var toStyles = {
-							transform: toTransform,
-							webkitTransform: toTransform,
-							opacity: ''
-						};
-	
-						_.assign(fromElem.style, fromStyles);
-						_.assign(toElem.style, toStyles);
-					});
-	
-					toElem.addEventListener('transitionend', function fadeOutToElement() {
-						toElem.removeEventListener('transitionend', fadeOutToElement);
-						fromElem.remove();
-	
-						originalElement.style.opacity = '';
-	
-						toElem.style.transition = 'opacity ' + TRANSITION_END_TIME + 's ease-in';
-						toElem.style.pointerEvents = 'none';
-	
-						_.result(originalElements, [key, 'animationDidFinish']);
-	
-						requestNextAnimationFrame(function () {
-							toElem.addEventListener('transitionend', function removeContainer() {
-								// Probably not needed, best to be safe
-								toElem.removeEventListener('transitionend', removeContainer);
-	
-								elementComunicator.removeListener('animating-to', removeAnimatingToElements);
-								elementComunicator.removeListener('animating-from', removeAnimatingFromElements);
-	
-								elementAnimationFinish();
-							});
-	
-							toElem.style.opacity = 0;
-						});
-					});
-	
-					elementComunicator.addListener('animating-to', removeAnimatingToElements);
-					elementComunicator.addListener('animating-from', removeAnimatingFromElements);
-	
-					elementComunicator.emit('animating-to', toElem.getAttribute('data-_reactid'));
-					elementComunicator.emit('animating-from', fromElem.getAttribute('data-_reactid'));
-					setTimeout(function () {
-						elementComunicator.emit('animating-to', toElem.getAttribute('data-_reactid'));
-						elementComunicator.emit('animating-from', fromElem.getAttribute('data-_reactid'));
-					}, 0);
-	
-					container.appendChild(fromElem);
-					container.appendChild(toElem);
-				})();
+				// Remove the clone of the original element, and this animation is complete
+				toElem.remove();
+				callback();
 			}
 		});
 	
-		document.body.appendChild(container);
+		elementComunicator.addListener('animating-to', removeAnimatingToElements);
+		elementComunicator.addListener('animating-from', removeAnimatingFromElements);
+	
+		// elementCommunicator isn't async, so if we emit outside of a setTimeout, some elements will be missing, and if we do it inside a setTimout, there can be a frame flash. Do both!
+		function emitHandlers() {
+			elementComunicator.emit('animating-to', toElem.getAttribute('data-_reactid'));
+			elementComunicator.emit('animating-from', fromElem.getAttribute('data-_reactid'));
+		}
+		setTimeout(emitHandlers, 0);
+		emitHandlers();
+	
+		container.appendChild(fromElem);
+		container.appendChild(toElem);
+	
+		// If an element and one of its subchildren is being transitioned, we don't want to animate both of them, else there will be duplicated artifacts. So we remove all child elements that are being animated. This pretty much has to be done with an event listener.
+		function removeAnimatingToElements(id) {
+			_.forEach(toElem.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
+				if (element !== toElem) {
+					element.style.opacity = 0;
+				}
+			});
+		}
+	
+		function removeAnimatingFromElements(id) {
+			_.forEach(fromElem.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
+				if (element !== fromElem) {
+					element.style.opacity = 0;
+				}
+			});
+		}
+	}
+	
+	function resetElement(_ref3) {
+		var originalElem = _ref3.originalElem;
+		var toElem = _ref3.toElem;
+		var fromElem = _ref3.fromElem;
+		var callback = _ref3.callback;
+	
+		originalElem.style.opacity = '';
+		toElem.style.opacity = '';
+		fromElem.style.opacity = '';
+		callback();
+	}
+	
+	function animateElements(_ref4, fromRefs, toRefs) {
+		var refs = _ref4.refs;
+		var transitionBodyTime = _ref4.transitionBodyTime;
+		var transitionEndTime = _ref4.transitionEndTime;
+	
+		var sharedKeys = _.intersection(_.keys(fromRefs), _.keys(toRefs));
+	
+		if (sharedKeys.length > 0) {
+			var container = document.createElement('div');
+	
+			var elementAnimationFinish = _.after(sharedKeys.length, function removeContainer() {
+				container.remove();
+			});
+	
+			var _$map$groupBy$value = _(sharedKeys).map(function (key) {
+				return {
+					container: container,
+					transitionBodyTime: transitionBodyTime,
+					transitionEndTime: transitionEndTime,
+					toRect: toRefs[key].rect,
+					fromRect: fromRefs[key].rect,
+					toElem: createClone(toRefs[key]),
+					fromElem: createClone(fromRefs[key]),
+					originalElem: React.findDOMNode(refs[key]),
+					callback: elementAnimationFinish,
+					triggerAnimationCallback: function triggerAnimationCallback() {
+						_.result(refs, [key, 'animationDidFinish']);
+					}
+				};
+			}).groupBy(function (_ref5) {
+				var fromElem = _ref5.fromElem;
+	
+				if (String(fromElem.style.opacity) === '0') {
+					// A result of two quick successions
+					// We're dealing with an element inside React's reach that we've manually set the opacity of
+					// We'll just reset it
+					return 'reset';
+				} else {
+					return 'animate';
+				}
+			}).value();
+	
+			var reset = _$map$groupBy$value.reset;
+			var animate = _$map$groupBy$value.animate;
+	
+			_.forEach(reset, resetElement);
+			_.forEach(animate, animateElement);
+	
+			document.body.appendChild(container);
+		}
 	}
 	
 	var itemTransition = (function () {
-		var base = null;
+		// This is definitely a hack. To work around react not providing a 'a whole view just changed' handler, we have to use timeouts. We start two lists formed of components that will unmount (from), and components that have mounted (to). The handlers will call a function (tranisionFrom, transitionTo) to append to one of these lists. When the first function is called, we know that the view is about to update, so we set a timeout. Due to the synchronous nature of React and the event loop of JavaScript, this will be called once the whole view has changed. Once this is called, we have to reset the lists to empty so we can recognise a new view.
+		var context = null;
 		var to = null;
 		var from = null;
 		var timerId = null;
 	
 		function fireAnimation() {
-			animateElements(from, to, base);
+			animateElements(context, from, to);
 	
-			base = null;
+			context = null;
 			to = null;
 			from = null;
 			timerId = null;
@@ -36315,14 +36379,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		function queueAnimation() {
 			if (timerId === null) {
-				// All the updates are (currently) done synchronously, so this will fire after all updates are finished
-				// spec says setTimeout is actually 5ms, so this may leak frames
+				// Spec says setTimeout(..., 0) is actually 5ms, so this may occasionally leak frames, there's nothing I can do about it
 				timerId = setTimeout(fireAnimation, 0);
 			}
 		}
 	
-		function setBase(newBase) {
-			base = newBase;
+		function setContext(newContext) {
+			context = newContext;
 		}
 	
 		function transitionTo(serial) {
@@ -36333,7 +36396,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (!to[serial.ref]) {
 				to[serial.ref] = serial;
 				queueAnimation();
-			} else {}
+			} else {
+				throw new Error('Transitioning to duplicate ref (' + serial.ref + ')');
+			}
 		}
 	
 		function transitionFrom(serial) {
@@ -36344,20 +36409,20 @@ return /******/ (function(modules) { // webpackBootstrap
 			if (!from[serial.ref]) {
 				from[serial.ref] = serial;
 				queueAnimation();
-			} else {}
+			} else {
+				throw new Error('Transitioning from duplicate ref (' + serial.ref + ')');
+			}
 		}
 	
-		return { transitionTo: transitionTo, transitionFrom: transitionFrom, setBase: setBase };
+		return { transitionTo: transitionTo, transitionFrom: transitionFrom, setContext: setContext };
 	})();
 	
 	var TweenState = {
-		getRefs: function getRefs() {
-			return this.refs;
-		},
 		componentWillUnmount: function componentWillUnmount() {
-			// We can get a flicker when the next component is loading, just show the current element in the mean time
+			// To the surprise of many, React isn't all that fast sometimes---especially in Safari. When this component unmounts, there can be a substantial delay until the next component is mounted. This causes a flicker, so to work around this, just show the current component in place until the next component is mounted.
 			var element = createClone(serializeNode(React.findDOMNode(this)));
 	
+			// Don't allow default animations on the element (to be safe)
 			_.assign(element.style, {
 				animation: 'none',
 				webkitAnimation: 'none'
@@ -36365,32 +36430,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			document.body.appendChild(element);
 	
-			console.log(element.getBoundingClientRect());
+			var refs = _.result(this, 'getRefs', this.refs);
+			_(refs).mapValues(serializeNode).forEach(itemTransition.transitionFrom).value();
 	
-			_(this.getRefs()).mapValues(serializeNode).forEach(itemTransition.transitionFrom).value();
-	
+			// Remove the placeholder element once everything is finished (setTimeout, for the moment, is guaranteed to be finished after the next component is mounted)
 			setTimeout(function () {
+				// Called after animations are initialised
 				element.remove();
 			}, 0);
 		},
 		componentDidMount: function componentDidMount() {
+			// React doesn't provide a 'whole view just loaded' handler. To work around this, we use a setTimeout, which will be fired after this happens. However, this does mean that this element will flash on the screen, so we have to temporarily hide it. This has to be done regardless of whether the element will be animated.
 			var node = React.findDOMNode(this);
-	
 			node.style.opacity = 0;
 	
+			var refs = _.result(this, 'getRefs', this.refs);
+			var transitionBodyTime = _.get(this, 'transitionBodyTime', TRANSITION_BODY_TIME);
+			var transitionEndTime = _.get(this, 'transitionEndTime', TRANSITION_END_TIME);
+	
+			itemTransition.setContext({
+				refs: refs, transitionBodyTime: transitionBodyTime, transitionEndTime: transitionEndTime
+			});
+			_(refs).mapValues(serializeNode).forEach(itemTransition.transitionTo).value();
+	
+			// In the animateElement, we override the opacity. We don't want to override what animateElement is doing, so we set a flag (OPACITY_MANAGED_BY_TWEEN) on the element to say that the opacity is managed. If it isn't managed, we reset it.
 			setTimeout(function () {
+				// Called after animations are initialised
 				if (node.getAttribute(OPACITY_MANAGED_BY_TWEEN) !== 'true') {
 					node.style.opacity = '';
 				}
 	
 				node.removeAttribute(OPACITY_MANAGED_BY_TWEEN);
 			}, 0);
-	
-			var refs = this.getRefs();
-	
-			itemTransition.setBase(refs);
-	
-			_(refs).mapValues(serializeNode).forEach(itemTransition.transitionTo).value();
 		}
 	};
 	
@@ -36398,6 +36469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		componentWillUnmount: function componentWillUnmount() {
 			var _this = this;
 	
+			// The gist here is that we clone the element in place and assign a 'leave' animation to it. When the animation finishes, we remove the clone from the dom.
 			var ref = React.findDOMNode(this);
 	
 			var elem = serializeNode(ref);
@@ -36405,8 +36477,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 			node.style.top = elem.rect.top + 'px';
 			node.style.left = elem.rect.left + 'px';
-			node.classList.add(this.animateOutClassName || 'leaving');
+			node.classList.add(_.get(this, 'animateOutClassName', ANIMATE_OUT_CLASS_NAME));
 	
+			// Same as in animateElements
 			function removeAnimatingElements(id) {
 				_.forEach(node.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
 					// Don't remove incase it fucks up the DOM
@@ -36443,16 +36516,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	module.exports = function init(react) {
+		// We have to use the user's React object, as it stores state and stuff.
 		React = react;
 	
 		return {
 			TweenState: TweenState, TransitionInOut: TransitionInOut
 		};
 	};
-	
-	//throw new Error(`Transitioning to duplicate ref (${serial.ref})`);
-
-	//throw new Error(`Transitioning from duplicate ref (${serial.ref})`);
 
 /***/ },
 /* 199 */

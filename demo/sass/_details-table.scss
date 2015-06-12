@@ -1,0 +1,24 @@
+%details-item {
+	font: $mod-1 $font-family;
+	vertical-align: top;
+}
+
+.details-table {
+	flex: 1;
+	border: 0;
+	border-spacing: $mod-0;
+	vertical-align: top;
+
+	&__title {
+		@extend .title !optional;
+		@extend %details-item;
+		font-weight: 100;
+		text-align: right;
+	}
+
+	&__value {
+		@extend .value !optional;
+		@extend %details-item;
+		font-weight: 700;
+	}
+}

@@ -1,0 +1,56 @@
+.frame {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+
+	&__body {
+		flex: 1;
+	}
+
+	&--normal {
+		background: #ECF0F1;
+	}
+	&--fire {
+		background: #E47E30;
+	}
+	&--grass {
+		background: #A6C446;
+	}
+	&--water {
+		background: #3A99D8;
+	}
+	&--ice {
+		background: #B9CAF0;
+	}
+	&--electric {
+		background: #FECC2F;
+	}
+	&--poison {
+		background: #5D355D;
+		color: white;
+	}
+	&--ground {
+		background: #EFDDB6;
+	}
+	&--bug {
+		background: #ED727C;
+	}
+	&--psychic {
+		background: #9A5CB4;
+	}
+	&--fighting {
+		background: #3C6F80;
+	}
+	&--ghost {
+		background: #2B2B2B;
+		color: white;
+	}
+	&--rock {
+		background: #5D4535;
+		color: white;
+	}
+	&--dragon {
+		background: #E54D42;
+	}
+}

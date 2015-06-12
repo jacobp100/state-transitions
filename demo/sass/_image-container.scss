@@ -1,0 +1,12 @@
+@import 'image';
+
+.image-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	&__image {
+		@extend .image !optional;
+	}
+}
