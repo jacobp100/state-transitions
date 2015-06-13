@@ -36104,8 +36104,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var events = __webpack_require__(199);
 	var _ = __webpack_require__(200);
 	
-	var TRANSITION_BODY_TIME = 0.6;
-	var TRANSITION_END_TIME = 0;
+	var TRANSITION_BODY_DURATION = 0.6;
+	var TRANSITION_BODY_TIMING_FUNCTION = 'ease-in-out';
+	var TRANSITION_END_DURATION = 0;
+	var TRANSITION_END_TIMING_FUNCTION = 'ease-in';
 	var ANIMATE_OUT_CLASS_NAME = 'leaving';
 	var REACT_ID_RE = /(<[^>]+)(data-reactid)([^>]*>)/gm;
 	var OPACITY_MANAGED_BY_TWEEN = 'data-opacity-managed';
@@ -36131,11 +36133,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 		element.style.position = 'absolute';
 		// Margin isn't included in getBoundingClientRect, so we have to clear it
-		element.style.margin = '0';
+		element.style.margin = '0px';
 		// Content, padding, and border sizes are, so we have to use border-box sizing
 		element.style.boxSizing = 'border-box';
-		element.style.top = window.scrollY + 'px';
-		element.style.left = window.scrollX + 'px';
+		element.style.top = '0px';
+		element.style.left = '0px';
 		// If they set a max dimension with content-box sizing, it will change when we use box-sizing, so we have to clear these
 		element.style.maxWidth = 'none';
 		element.style.maxHeight = 'none';
@@ -36173,8 +36175,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		var originalElem = _ref2.originalElem;
 		var toElem = _ref2.toElem;
 		var fromElem = _ref2.fromElem;
-		var transitionBodyTime = _ref2.transitionBodyTime;
-		var transitionEndTime = _ref2.transitionEndTime;
+		var bodyDuration = _ref2.bodyDuration;
+		var bodyTimingFunction = _ref2.bodyTimingFunction;
+		var endDuration = _ref2.endDuration;
+		var endTimingFunction = _ref2.endTimingFunction;
 		var callback = _ref2.callback;
 		var triggerAnimationCallback = _ref2.triggerAnimationCallback;
 	
@@ -36182,7 +36186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		var scaleX = fromRect.width / toRect.width;
 		var scaleY = fromRect.height / toRect.height;
 	
-		var transition = 'all ' + transitionBodyTime + 's ease-in-out';
+		var transition = 'all ' + bodyDuration + 's ' + bodyTimingFunction;
 		var translate = 'translate(' + fromRect.left + 'px, ' + fromRect.top + 'px)';
 		var fromTransform = '' + translate + ' scale(1, 1)';
 		var toTransform = '' + translate + ' scale(' + scaleX + ', ' + scaleY + ')';
@@ -36239,9 +36243,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			fromElem.remove();
 			triggerAnimationCallback();
 	
-			if (transitionEndTime > 0.01) {
+			if (endDuration > 0.01) {
 				// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
-				toElem.style.transition = 'opacity ' + transitionEndTime + 's ease-in';
+				toElem.style.transition = 'opacity ' + endDuration + 's ' + endTimingFunction;
 				toElem.style.pointerEvents = 'none';
 	
 				requestNextAnimationFrame(function () {
@@ -36311,8 +36315,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function animateElements(_ref4, fromRefs, toRefs) {
 		var refs = _ref4.refs;
-		var transitionBodyTime = _ref4.transitionBodyTime;
-		var transitionEndTime = _ref4.transitionEndTime;
+		var bodyDuration = _ref4.bodyDuration;
+		var bodyTimingFunction = _ref4.bodyTimingFunction;
+		var endDuration = _ref4.endDuration;
+		var endTimingFunction = _ref4.endTimingFunction;
 	
 		var sharedKeys = _.intersection(_.keys(fromRefs), _.keys(toRefs));
 	
@@ -36326,8 +36332,10 @@ return /******/ (function(modules) { // webpackBootstrap
 			var _$map$groupBy$value = _(sharedKeys).map(function (key) {
 				return {
 					container: container,
-					transitionBodyTime: transitionBodyTime,
-					transitionEndTime: transitionEndTime,
+					bodyDuration: bodyDuration,
+					bodyTimingFunction: bodyTimingFunction,
+					endDuration: endDuration,
+					endTimingFunction: endTimingFunction,
 					toRect: toRefs[key].rect,
 					fromRect: fromRefs[key].rect,
 					toElem: createClone(toRefs[key]),
@@ -36420,12 +36428,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	var TweenState = {
 		componentWillUnmount: function componentWillUnmount() {
 			// To the surprise of many, React isn't all that fast sometimes---especially in Safari. When this component unmounts, there can be a substantial delay until the next component is mounted. This causes a flicker, so to work around this, just show the current component in place until the next component is mounted.
-			var element = createClone(serializeNode(React.findDOMNode(this)));
+			var node = serializeNode(React.findDOMNode(this));
+			var element = createClone(node);
 	
 			// Don't allow default animations on the element (to be safe)
 			_.assign(element.style, {
 				animation: 'none',
-				webkitAnimation: 'none'
+				webkitAnimation: 'none',
+				top: node.rect.top + 'px',
+				left: node.rect.left + 'px'
 			});
 	
 			document.body.appendChild(element);
@@ -36445,11 +36456,17 @@ return /******/ (function(modules) { // webpackBootstrap
 			node.style.opacity = 0;
 	
 			var refs = _.result(this, 'getRefs', this.refs);
-			var transitionBodyTime = _.get(this, 'transitionBodyTime', TRANSITION_BODY_TIME);
-			var transitionEndTime = _.get(this, 'transitionEndTime', TRANSITION_END_TIME);
+			var bodyDuration = _.get(this, 'transitionBodyDuration', TRANSITION_BODY_DURATION);
+			var bodyTimingFunction = _.get(this, 'transitionBodyTimingFunction', TRANSITION_BODY_TIMING_FUNCTION);
+			var endDuration = _.get(this, 'transitionEndDuration', TRANSITION_END_DURATION);
+			var endTimingFunction = _.get(this, 'transitionEndTimingFunction', TRANSITION_END_TIMING_FUNCTION);
 	
 			itemTransition.setContext({
-				refs: refs, transitionBodyTime: transitionBodyTime, transitionEndTime: transitionEndTime
+				refs: refs,
+				bodyDuration: bodyDuration,
+				bodyTimingFunction: bodyTimingFunction,
+				endDuration: endDuration,
+				endTimingFunction: endTimingFunction
 			});
 			_(refs).mapValues(serializeNode).forEach(itemTransition.transitionTo).value();
 	

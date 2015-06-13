@@ -32,11 +32,11 @@ function createClone({ outerHTML, rect }) {
 
 	element.style.position = 'absolute';
 	// Margin isn't included in getBoundingClientRect, so we have to clear it
-	element.style.margin = '0';
+	element.style.margin = '0px';
 	// Content, padding, and border sizes are, so we have to use border-box sizing
 	element.style.boxSizing = 'border-box';
-	element.style.top = window.scrollY + 'px';
-	element.style.left = window.scrollX + 'px';
+	element.style.top = '0px';
+	element.style.left = '0px';
 	// If they set a max dimension with content-box sizing, it will change when we use box-sizing, so we have to clear these
 	element.style.maxWidth = 'none';
 	element.style.maxHeight = 'none';
@@ -67,12 +67,12 @@ function serializeNode(node, ref) {
 	};
 }
 
-function animateElement({ container, toRect, fromRect, originalElem, toElem, fromElem, transitionBodyDuration, transitionBodyTimingFunction, transitionEndDuration, transitionEndTimingFunction, callback, triggerAnimationCallback }) {
+function animateElement({ container, toRect, fromRect, originalElem, toElem, fromElem, bodyDuration, bodyTimingFunction, endDuration, endTimingFunction, callback, triggerAnimationCallback }) {
 	// To animate components, set initial scales, opacities, and transitions on the elements, and in the next frame, add the new initial scales and opacities.
 	var scaleX = fromRect.width / toRect.width;
 	var scaleY = fromRect.height / toRect.height;
 
-	var transition = `all ${transitionBodyDuration}s ${transitionBodyTimingFunction}`;
+	var transition = `all ${bodyDuration}s ${bodyTimingFunction}`;
 	var translate = `translate(${fromRect.left}px, ${fromRect.top}px)`;
 	var fromTransform = `${translate} scale(1, 1)`;
 	var toTransform = `${translate} scale(${scaleX}, ${scaleY})`;
@@ -130,9 +130,9 @@ function animateElement({ container, toRect, fromRect, originalElem, toElem, fro
 		fromElem.remove();
 		triggerAnimationCallback();
 
-		if (transitionEndDuration > 0.01) {
+		if (endDuration > 0.01) {
 			// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
-			toElem.style.transition = `opacity ${transitionEndDuration}s ${transitionEndTimingFunction}`;
+			toElem.style.transition = `opacity ${endDuration}s ${endTimingFunction}`;
 			toElem.style.pointerEvents = 'none';
 
 			requestNextAnimationFrame(() => {
@@ -196,7 +196,7 @@ function resetElement({ originalElem, toElem, fromElem, callback }) {
 	callback();
 }
 
-function animateElements({ refs, transitionBodyDuration, transitionEndDuration }, fromRefs, toRefs) {
+function animateElements({ refs, bodyDuration, bodyTimingFunction, endDuration, endTimingFunction }, fromRefs, toRefs) {
 	var sharedKeys = _.intersection(_.keys(fromRefs), _.keys(toRefs));
 
 	if (sharedKeys.length > 0) {
@@ -209,8 +209,10 @@ function animateElements({ refs, transitionBodyDuration, transitionEndDuration }
 		var { reset, animate } = _(sharedKeys).map(key => {
 			return {
 				container,
-				transitionBodyDuration,
-				transitionEndDuration,
+				bodyDuration,
+				bodyTimingFunction,
+				endDuration,
+				endTimingFunction,
 				toRect: toRefs[key].rect,
 				fromRect: fromRefs[key].rect,
 				toElem: createClone(toRefs[key]),
@@ -300,12 +302,15 @@ const itemTransition = (() => {
 const TweenState = {
 	componentWillUnmount() {
 		// To the surprise of many, React isn't all that fast sometimes---especially in Safari. When this component unmounts, there can be a substantial delay until the next component is mounted. This causes a flicker, so to work around this, just show the current component in place until the next component is mounted.
-		var element = createClone(serializeNode(React.findDOMNode(this)));
+		var node = serializeNode(React.findDOMNode(this));
+		var element = createClone(node);
 
 		// Don't allow default animations on the element (to be safe)
 		_.assign(element.style, {
 			animation: 'none',
-			webkitAnimation: 'none'
+			webkitAnimation: 'none',
+			top: node.rect.top + 'px',
+			left: node.rect.left + 'px'
 		});
 
 		document.body.appendChild(element);
@@ -326,13 +331,17 @@ const TweenState = {
 		node.style.opacity = 0;
 
 		var refs = _.result(this, 'getRefs', this.refs);
-		var transitionBodyDuration = _.get(this, 'transitionBodyDuration', TRANSITION_BODY_DURATION);
-		var transitionBodyFunction = _.get(this, 'transitionBodyTimingFunction', TRANSITION_BODY_TIMING_FUNCTION);
-		var transitionEndDuration = _.get(this, 'transitionEndDuration', TRANSITION_END_DURATION);
-		var transitionEndFunction = _.get(this, 'transitionEndTimingFunction', TRANSITION_END_TIMING_FUNCTION);
+		var bodyDuration = _.get(this, 'transitionBodyDuration', TRANSITION_BODY_DURATION);
+		var bodyTimingFunction = _.get(this, 'transitionBodyTimingFunction', TRANSITION_BODY_TIMING_FUNCTION);
+		var endDuration = _.get(this, 'transitionEndDuration', TRANSITION_END_DURATION);
+		var endTimingFunction = _.get(this, 'transitionEndTimingFunction', TRANSITION_END_TIMING_FUNCTION);
 
 		itemTransition.setContext({
-			refs, transitionBodyDuration, transitionBodyFunction, transitionEndDuration, transitionEndFunction
+			refs,
+			bodyDuration,
+			bodyTimingFunction,
+			endDuration,
+			endTimingFunction
 		});
 		_(refs).mapValues(serializeNode).forEach(itemTransition.transitionTo).value();
 

@@ -1,6 +1,6 @@
 {
   "name": "state-transitions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Provides mixins to transition between elements when the view changes",
   "main": "index.js",
   "scripts": {
