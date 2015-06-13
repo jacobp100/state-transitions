@@ -45,6 +45,7 @@
     -ms-flex-item-align: center;
     align-self: center;
     width: 400px;
+    height: 400px;
     z-index: 1; }
   .details__details-container {
     -webkit-flex: 1;
@@ -131,6 +132,9 @@
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center; }
+  .image-container__image {
+    min-height: 120px;
+    min-width: 120px; }
 
 .image, .details__image, .image-container__image {
   z-index: 1; }
