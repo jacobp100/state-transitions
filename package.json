@@ -1,15 +1,22 @@
 {
-  "name": "animations-test",
+  "name": "state-transitions",
   "version": "1.0.0",
-  "description": "",
+  "description": "Provides mixins to transition between elements when the view changes",
   "main": "index.js",
   "scripts": {
     "build": "babel src/index.js -o index.js",
     "watch": "babel src/index.js -w -o index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacobp100/state-transitions"
+  },
   "author": "",
-  "license": "ISC",
-  "dependencies": {},
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^3.9.3",
+    "react": "^0.13.3"
+  },
   "devDependencies": {
     "babel": "^5.5.6"
   }

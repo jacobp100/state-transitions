@@ -1,13 +1,13 @@
 {
-  "name": "animations-test",
+  "name": "state-transitions-demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Demo for state transitions",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "lodash": "^3.9.3",
     "react": "^0.13.3",

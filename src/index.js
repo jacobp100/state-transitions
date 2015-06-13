@@ -4,8 +4,10 @@ var React;
 const events = require('events');
 const _ = require('lodash');
 
-const TRANSITION_BODY_TIME = 0.6;
-const TRANSITION_END_TIME = 0;
+const TRANSITION_BODY_DURATION = 0.6;
+const TRANSITION_BODY_TIMING_FUNCTION = 'ease-in-out';
+const TRANSITION_END_DURATION = 0;
+const TRANSITION_END_TIMING_FUNCTION = 'ease-in';
 const ANIMATE_OUT_CLASS_NAME = 'leaving';
 const REACT_ID_RE = /(<[^>]+)(data-reactid)([^>]*>)/gm;
 const OPACITY_MANAGED_BY_TWEEN = 'data-opacity-managed';
@@ -65,12 +67,12 @@ function serializeNode(node, ref) {
 	};
 }
 
-function animateElement({ container, toRect, fromRect, originalElem, toElem, fromElem, transitionBodyTime, transitionEndTime, callback, triggerAnimationCallback }) {
+function animateElement({ container, toRect, fromRect, originalElem, toElem, fromElem, transitionBodyDuration, transitionBodyTimingFunction, transitionEndDuration, transitionEndTimingFunction, callback, triggerAnimationCallback }) {
 	// To animate components, set initial scales, opacities, and transitions on the elements, and in the next frame, add the new initial scales and opacities.
 	var scaleX = fromRect.width / toRect.width;
 	var scaleY = fromRect.height / toRect.height;
 
-	var transition = `all ${transitionBodyTime}s ease-in-out`;
+	var transition = `all ${transitionBodyDuration}s ${transitionBodyTimingFunction}`;
 	var translate = `translate(${fromRect.left}px, ${fromRect.top}px)`;
 	var fromTransform = `${translate} scale(1, 1)`;
 	var toTransform = `${translate} scale(${scaleX}, ${scaleY})`;
@@ -128,9 +130,9 @@ function animateElement({ container, toRect, fromRect, originalElem, toElem, fro
 		fromElem.remove();
 		triggerAnimationCallback();
 
-		if (transitionEndTime > 0.01) {
+		if (transitionEndDuration > 0.01) {
 			// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
-			toElem.style.transition = `opacity ${transitionEndTime}s ease-in`;
+			toElem.style.transition = `opacity ${transitionEndDuration}s ${transitionEndTimingFunction}`;
 			toElem.style.pointerEvents = 'none';
 
 			requestNextAnimationFrame(() => {
@@ -194,7 +196,7 @@ function resetElement({ originalElem, toElem, fromElem, callback }) {
 	callback();
 }
 
-function animateElements({ refs, transitionBodyTime, transitionEndTime }, fromRefs, toRefs) {
+function animateElements({ refs, transitionBodyDuration, transitionEndDuration }, fromRefs, toRefs) {
 	var sharedKeys = _.intersection(_.keys(fromRefs), _.keys(toRefs));
 
 	if (sharedKeys.length > 0) {
@@ -207,8 +209,8 @@ function animateElements({ refs, transitionBodyTime, transitionEndTime }, fromRe
 		var { reset, animate } = _(sharedKeys).map(key => {
 			return {
 				container,
-				transitionBodyTime,
-				transitionEndTime,
+				transitionBodyDuration,
+				transitionEndDuration,
 				toRect: toRefs[key].rect,
 				fromRect: fromRefs[key].rect,
 				toElem: createClone(toRefs[key]),
@@ -324,11 +326,13 @@ const TweenState = {
 		node.style.opacity = 0;
 
 		var refs = _.result(this, 'getRefs', this.refs);
-		var transitionBodyTime = _.get(this, 'transitionBodyTime', TRANSITION_BODY_TIME);
-		var transitionEndTime = _.get(this, 'transitionEndTime', TRANSITION_END_TIME);
+		var transitionBodyDuration = _.get(this, 'transitionBodyDuration', TRANSITION_BODY_DURATION);
+		var transitionBodyFunction = _.get(this, 'transitionBodyTimingFunction', TRANSITION_BODY_TIMING_FUNCTION);
+		var transitionEndDuration = _.get(this, 'transitionEndDuration', TRANSITION_END_DURATION);
+		var transitionEndFunction = _.get(this, 'transitionEndTimingFunction', TRANSITION_END_TIMING_FUNCTION);
 
 		itemTransition.setContext({
-			refs, transitionBodyTime, transitionEndTime
+			refs, transitionBodyDuration, transitionBodyFunction, transitionEndDuration, transitionEndFunction
 		});
 		_(refs).mapValues(serializeNode).forEach(itemTransition.transitionTo).value();
 
