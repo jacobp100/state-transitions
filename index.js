@@ -67,10 +67,12 @@ function animateElement(_ref2) {
 	var originalElement = _ref2.originalElement;
 	var toElement = _ref2.toElement;
 	var fromElement = _ref2.fromElement;
-	var bodyDuration = _ref2.bodyDuration;
-	var bodyTimingFunction = _ref2.bodyTimingFunction;
-	var endDuration = _ref2.endDuration;
-	var endTimingFunction = _ref2.endTimingFunction;
+	var duration = _ref2.duration;
+	var timingFunction = _ref2.timingFunction;
+	var delay = _ref2.delay;
+	var fadeOutDuration = _ref2.fadeOutDuration;
+	var fadeOutTimingFunction = _ref2.fadeOutTimingFunction;
+	var fadeOutDelay = _ref2.fadeOutDelay;
 
 	var container = document.createElement('div');
 	document.body.appendChild(container);
@@ -82,7 +84,7 @@ function animateElement(_ref2) {
 	var scaleX = fromRect.width / toRect.width;
 	var scaleY = fromRect.height / toRect.height;
 
-	var transition = 'all ' + bodyDuration + 's ' + bodyTimingFunction;
+	var transition = 'all ' + duration + 's ' + timingFunction + ' ' + delay + 's';
 	var translate = 'translate(' + fromRect.left + 'px, ' + fromRect.top + 'px)';
 	var fromTransform = '' + translate + ' scale(1, 1)';
 	var toTransform = '' + translate + ' scale(' + scaleX + ', ' + scaleY + ')';
@@ -139,9 +141,9 @@ function animateElement(_ref2) {
 		fromClone.remove();
 		//triggerAnimationCallback();
 
-		if (endDuration > 0.01) {
+		if (fadeOutDuration > 0.01) {
 			// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
-			toClone.style.transition = 'opacity ' + endDuration + 's ' + endTimingFunction;
+			toClone.style.transition = 'opacity ' + fadeOutDuration + 's ' + fadeOutTimingFunction + ' ' + fadeOutDelay + 's';
 			toClone.style.pointerEvents = 'none';
 
 			requestNextAnimationFrame(function () {
@@ -213,18 +215,18 @@ function resetElement(_ref3) {
 
 function animateBetween(from, to) {
 	var elements = {
-		bodyDuration: to.bodyDuration,
-		bodyTimingFunction: to.bodyTimingFunction,
-		endDuration: to.endDuration,
-		endTimingFunction: to.endTimingFunction,
+		duration: to.duration,
+		timingFunction: to.timingFunction,
+		delay: to.delay,
+		fadeOutDuration: to.fadeOutDuration,
+		fadeOutTimingFunction: to.fadeOutTimingFunction,
+		fadeOutDelay: to.fadeOutDelay,
 		toRect: to.toElement.rect,
 		fromRect: from.fromElement.rect,
 		toElement: createClone(to.toElement),
 		fromElement: createClone(from.fromElement),
 		originalElement: to.originalElement
 	};
-
-	console.log(elements, from, to);
 
 	if (String(elements.fromElement.style.opacity) !== '0') {
 		animateElement(elements);
@@ -272,7 +274,6 @@ var itemTransition = (function () {
 			to[id] = serial;
 			queueAnimation();
 		} else {
-			console.error(serial, to);
 			throw new Error('Transitioning to duplicate id (' + serial.id + ')');
 		}
 	}
@@ -288,7 +289,6 @@ var itemTransition = (function () {
 			from[id] = serial;
 			queueAnimation();
 		} else {
-			console.error(serial, from);
 			throw new Error('Transitioning from duplicate id (' + serial.id + ')');
 		}
 	}
@@ -302,12 +302,23 @@ module.exports = function init(React) {
 	var TweenState = React.createClass({
 		displayName: 'TweenState',
 
+		propTypes: {
+			id: React.PropTypes.string.isRequired,
+			duration: React.PropTypes.number,
+			timingFunction: React.PropTypes.string,
+			delay: React.PropTypes.number,
+			fadeOutDuration: React.PropTypes.number,
+			fadeOutTimingFunction: React.PropTypes.string,
+			fadeOutDelay: React.PropTypes.number
+		},
 		getDefaultProps: function getDefaultProps() {
 			return {
-				bodyDuration: 0.6,
-				bodyTimingFunction: 'ease-in-out',
-				endDuration: 0,
-				endTimingFunction: 'ease-in'
+				duration: 0.6,
+				timingFunction: 'ease-in-out',
+				delay: 0,
+				fadeOutDuration: 0,
+				fadeOutTimingFunction: 'ease-in',
+				fadeOutDelay: 0
 			};
 		},
 		componentWillUnmount: function componentWillUnmount() {
@@ -338,7 +349,7 @@ module.exports = function init(React) {
 			// React doesn't provide a 'whole view just loaded' handler. To work around this, we use a setTimeout, which will be fired after this happens. However, this does mean that this element will flash on the screen, so we have to temporarily hide it. This has to be done regardless of whether the element will be animated.
 			var originalElement = React.findDOMNode(this);
 			var toElement = serializeNode(originalElement, this.props.id);
-			var context = _.assign({ toElement: toElement, originalElement: originalElement }, _.pick(this.props, 'bodyDuration', 'bodyTimingFunction', 'endDuration', 'endTimingFunction'));
+			var context = _.assign({ toElement: toElement, originalElement: originalElement }, _.pick(this.props, 'duration', 'timingFunction', 'delay', 'fadeOutDuration', 'fadeOutTimingFunction', 'fadeOutDelay'));
 
 			originalElement.style.opacity = 0;
 
