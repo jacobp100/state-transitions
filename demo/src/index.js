@@ -12,8 +12,6 @@ const { Route, DefaultRoute, RouteHandler, Link } = Router;
 
 
 const List = React.createClass({
-	animateOutClassName: 'link-view--leaving',
-	transitionEndTime: -1,
 	getInitialState() {
 		return {
 			search: ''
@@ -52,12 +50,14 @@ const List = React.createClass({
 			.value();
 
 		return (
-			<div className='link-view'>
-				<input type='text' className='search' placeholder='Search&hellip;' onChange={ this.onChange } />
-				<div className='link-view__items'>
-					{ pokeItems }
+			<TransitionInOut animateOutClassName='link-view--leaving'>
+				<div className='link-view'>
+					<input type='text' className='search' placeholder='Search&hellip;' onChange={ this.onChange } />
+					<div className='link-view__items'>
+						{ pokeItems }
+					</div>
 				</div>
-			</div>
+			</TransitionInOut>
 		);
 	}
 });

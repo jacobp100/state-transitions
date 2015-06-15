@@ -71,13 +71,12 @@ function animateElement(_ref2) {
 	var bodyTimingFunction = _ref2.bodyTimingFunction;
 	var endDuration = _ref2.endDuration;
 	var endTimingFunction = _ref2.endTimingFunction;
-	var triggerAnimationCallback = _ref2.triggerAnimationCallback;
 
 	var container = document.createElement('div');
-	document.append(container);
+	document.body.appendChild(container);
 
-	var fromClone = createClone(fromElement);
-	var toClone = createClone(toElement);
+	var fromClone = fromElement;
+	var toClone = toElement;
 
 	// To animate components, set initial scales, opacities, and transitions on the elements, and in the next frame, add the new initial scales and opacities.
 	var scaleX = fromRect.width / toRect.width;
@@ -138,7 +137,7 @@ function animateElement(_ref2) {
 		originalElement.style.opacity = '';
 		toClone.removeEventListener('transitionend', fadeOutToElement);
 		fromClone.remove();
-		triggerAnimationCallback();
+		//triggerAnimationCallback();
 
 		if (endDuration > 0.01) {
 			// Fade the clone of the original element to the original element in the case that it has updated during the animation (off by default)
@@ -213,7 +212,19 @@ function resetElement(_ref3) {
 }
 
 function animateBetween(from, to) {
-	var elements = _.assign({}, from, to);
+	var elements = {
+		bodyDuration: to.bodyDuration,
+		bodyTimingFunction: to.bodyTimingFunction,
+		endDuration: to.endDuration,
+		endTimingFunction: to.endTimingFunction,
+		toRect: to.toElement.rect,
+		fromRect: from.fromElement.rect,
+		toElement: createClone(to.toElement),
+		fromElement: createClone(from.fromElement),
+		originalElement: to.originalElement
+	};
+
+	console.log(elements, from, to);
 
 	if (String(elements.fromElement.style.opacity) !== '0') {
 		animateElement(elements);
@@ -236,7 +247,7 @@ var itemTransition = (function () {
 		var toKeys = _.keys(to);
 		_(toKeys).intersection(fromKeys).forEach(function (key) {
 			animateBetween(from[key], to[key]);
-		});
+		}).value();
 
 		to = null;
 		from = null;
@@ -255,8 +266,10 @@ var itemTransition = (function () {
 			to = {};
 		}
 
-		if (!to[serial.id]) {
-			to[serial.id] = serial;
+		var id = serial.toElement.id;
+
+		if (!to[id]) {
+			to[id] = serial;
 			queueAnimation();
 		} else {
 			console.error(serial, to);
@@ -269,8 +282,10 @@ var itemTransition = (function () {
 			from = {};
 		}
 
-		if (!from[serial.id]) {
-			from[serial.id] = serial;
+		var id = serial.fromElement.id;
+
+		if (!from[id]) {
+			from[id] = serial;
 			queueAnimation();
 		} else {
 			console.error(serial, from);
@@ -296,24 +311,36 @@ module.exports = function init(React) {
 			};
 		},
 		componentWillUnmount: function componentWillUnmount() {
-			var child = React.Children.only(this.props.children);
-			var originalElement = React.findDOMNode(child);
+			var originalElement = React.findDOMNode(this);
 			var fromElement = serializeNode(originalElement, this.props.id);
 
+			var placeholderElement = createClone(fromElement);
+
+			// Don't allow default animations on the element (to be safe)
+			_.assign(placeholderElement.style, {
+				animation: 'none',
+				webkitAnimation: 'none',
+				top: fromElement.rect.top + 'px',
+				left: fromElement.rect.left + 'px'
+			});
+
+			document.body.appendChild(placeholderElement);
+
 			itemTransition.transitionFrom({ fromElement: fromElement });
+
+			// Remove the placeholder element once everything is finished (setTimeout, for the moment, is guaranteed to be finished after the next component is mounted)
+			setTimeout(function () {
+				// Called after animations are initialised
+				placeholderElement.remove();
+			}, 0);
 		},
 		componentDidMount: function componentDidMount() {
 			// React doesn't provide a 'whole view just loaded' handler. To work around this, we use a setTimeout, which will be fired after this happens. However, this does mean that this element will flash on the screen, so we have to temporarily hide it. This has to be done regardless of whether the element will be animated.
-			var child = React.Children.only(this.props.children);
-			try {
-				var originalElement = React.findDOMNode(child);
-			} catch (e) {
-				console.log('failed to find DOM node', child);
-			}
+			var originalElement = React.findDOMNode(this);
 			var toElement = serializeNode(originalElement, this.props.id);
-			originalElement.style.opacity = 0;
-
 			var context = _.assign({ toElement: toElement, originalElement: originalElement }, _.pick(this.props, 'bodyDuration', 'bodyTimingFunction', 'endDuration', 'endTimingFunction'));
+
+			originalElement.style.opacity = 0;
 
 			itemTransition.transitionTo(context);
 
@@ -335,42 +362,60 @@ module.exports = function init(React) {
 	var TransitionInOut = React.createClass({
 		displayName: 'TransitionInOut',
 
-		/*componentWillUnmount() {
-  	// The gist here is that we clone the element in place and assign a 'leave' animation to it. When the animation finishes, we remove the clone from the dom.
-  	var ref = React.findDOMNode(this);
-  		var elem = serializeNode(ref);
-  	var node = createClone(elem);
-  		node.style.top = elem.rect.top + 'px';
-  	node.style.left = elem.rect.left + 'px';
-  	node.classList.add(_.get(this, 'animateOutClassName', ANIMATE_OUT_CLASS_NAME));
-  			// Same as in animateElements
-  	function removeAnimatingElements(id) {
-  		_.forEach(node.querySelectorAll(`[data-_reactid="${id}"]`), element => {
-  			// Don't remove incase it fucks up the DOM
-  			element.style.opacity = 0;
-  		});
-  	}
-  		elementComunicator.addListener('animating-from', removeAnimatingElements);
-  			function animationend() {
-  		node.removeEventListener('animationend', animationend);
-  		node.removeEventListener('webkitAnimationEnd', animationend);
-  			elementComunicator.removeListener('animating-from', removeAnimatingElements);
-  			node.remove();
-  	}
-  		node.addEventListener('animationend', animationend);
-  	node.addEventListener('webkitAnimationEnd', animationend);
-  			requestNextAnimationFrame(() => {
-  		var styles = window.getComputedStyle(node);
-  			if (!(styles.animationName && styles.animationName !== 'none') && !(styles.webkitAnimationName && styles.webkitAnimationName !== 'none')) {
-  			console.warn('No animation set on element', this);
-  			// No animation set, just remove the node
-  			animationend();
-  		}
-  	});
-  			document.body.appendChild(node);
-  }*/
+		getDefaultProps: function getDefaultProps() {
+			return {
+				animateOutClassName: 'leaving'
+			};
+		},
+		componentWillUnmount: function componentWillUnmount() {
+			var _this = this;
+
+			// The gist here is that we clone the element in place and assign a 'leave' animation to it. When the animation finishes, we remove the clone from the dom.
+			var originalElement = React.findDOMNode(this);
+
+			var transitionElement = serializeNode(originalElement);
+			var transitionOutElement = createClone(transitionElement);
+
+			transitionOutElement.style.top = transitionElement.rect.top + 'px';
+			transitionOutElement.style.left = transitionElement.rect.left + 'px';
+			transitionOutElement.classList.add(this.props.animateOutClassName);
+
+			// Same as in animateElements
+			function removeAnimatingElements(id) {
+				_.forEach(transitionOutElement.querySelectorAll('[data-_reactid="' + id + '"]'), function (element) {
+					// Don't remove incase it fucks up the DOM
+					element.style.opacity = 0;
+				});
+			}
+
+			elementComunicator.addListener('animating-from', removeAnimatingElements);
+
+			function animationend() {
+				transitionOutElement.removeEventListener('animationend', animationend);
+				transitionOutElement.removeEventListener('webkitAnimationEnd', animationend);
+
+				elementComunicator.removeListener('animating-from', removeAnimatingElements);
+
+				transitionOutElement.remove();
+			}
+
+			transitionOutElement.addEventListener('animationend', animationend);
+			transitionOutElement.addEventListener('webkitAnimationEnd', animationend);
+
+			requestNextAnimationFrame(function () {
+				var styles = window.getComputedStyle(transitionOutElement);
+
+				if (!(styles.animationName && styles.animationName !== 'none') && !(styles.webkitAnimationName && styles.webkitAnimationName !== 'none')) {
+					console.warn('No animation set on element', _this);
+					// No animation set, just remove the node
+					animationend();
+				}
+			});
+
+			document.body.appendChild(transitionOutElement);
+		},
 		render: function render() {
-			return this.props.children[0];
+			return React.Children.only(this.props.children);
 		}
 	});
 
@@ -378,3 +423,4 @@ module.exports = function init(React) {
 		TweenState: TweenState, TransitionInOut: TransitionInOut
 	};
 };
+/*createClone*/ /*createClone*/
