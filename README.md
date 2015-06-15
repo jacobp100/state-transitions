@@ -1,6 +1,6 @@
 # React State Transitions
 
-Provides mixins to transition between elements when the view changes. Pretty much any method of view handling should work, and the demo uses ReactRouter.
+Provides a set of components to animate between elements when the view re-renders. Pretty much any method of view handling should work, and the demo uses ReactRouter.
 
 ![Demo](http://jacobp100.github.io/state-transitions/TweenState.gif)
 
@@ -19,72 +19,73 @@ Note that you **must** provide your React object for this to work.
 
 # Tween State
 
-Morphs elements from the previous state to the next state. It does this by looking at the keys of the refs of the two states, and animating the elements whos ref keys match on both sides. In the example below, the ref `animate-me` is available on both components, so those two refs be transitioned.
-
-The tween is formed of a body transition, where the previous element transforms into the next element, and an end transition, where the final element fades into itself. The end transition is off by default, but can be enabled in the case that the final element updates during the transition. E.g. you start fetching data when the animation starts.
+Morphs elements from the previous to the next view (the main animation you see in the picture). It does this by comparing all `TweenState` components removed and added in a view re-render, and animating between the TweenState elements that have the same `id` property.
 
 ```js
 var AnimateFrom = React.createClass({
-    mixins: [TweenState],
-    transitionBodyDuration: 0.6, // Optional, defaults to 0.6
-    transitionBodyTimingFunction: 'ease-in-out', // Optional, defaults to 'ease-in-out'
-    transitionEndDuration: 0, // Optional, defaults to 0
-    transitionEndTimingFunction: 'ease-in' // Optional, defaults to 'ease-in'
-    ...
     render() {
         return (
-            <div ref='animate-me'>
-                Animate me!
-            </div>
+            <TweenState id='animate-me'>
+                <div>
+                    Animate me!
+                </div>
+            </TweenState>
         );
     }
 });
 
 var AnimateTo = React.createClass({
-    mixins: [TweenState],
     render() {
         return (
-            <div ref='animate-me'>
-                I was animated!
-            </div>
+            <TweenState id='animate-me' duration={ 0.6 } timingFunction='ease-in-out' delay={ 0 }>
+                <div>
+                    I was animated!
+                </div>
+            </TweenState>
         );
     }
 });
 ```
 
-Should you not want to automatically use the refs of the component, or want to reference elements in child components, you can add a `getRefs` method to your component. This should return an object of whose keys are the elements to match against, and the values as the React elements.
+Only one element from each before and after the view re-render can contain the same `id`, and will throw an error if violated.
 
-```js
-React.createClass({
-    mixins: [TweenState],
-    getRefs() {
-        return {
-            a: this.refs.randomComponent,
-            b: this.refs.childComponent.refs.childRef
-        };
-    }
-    ...
-});
-```
+There are the following optional arguments are also available.
 
-It is possible to have multiple components animate. If one animating component is a child of another animating component, the child component will be removed from the parent, so you won't see any artifacts.
+| Property       | Default       |
+|----------------|---------------|
+| duration       | 0.6           |
+| timingFunction | 'ease-in-out' |
+| delay          | 0             |
+
+Should the final element update itself during the animation, it is possible to fade out to the updated element using the following properties. Setting `fadeOutDuration` to something greater than zero will enable this functionality.
+
+| Property              | Default   |
+|-----------------------|-----------|
+| fadeOutDuration       | 0         |
+| fadeOutTimingFunction | 'ease-in' |
+| fadeOutDelay          | 0         |
+
+When using TweenState, the entire element including subelements is copied, so it will look identical during the transition.
+
+It is possible to nest TweenState components, with all components animating, and child TweenState components will be hidden from their parents so you don't see duplicate elements.
 
 # Transition In Out
 
-Adds transition in and transition out animations to a single element. Different from ReactCSSTransitionGroup in that it is designed for the one element, and not with inserting and removing child nodes. This can be used on its own, or with TweenState.
+Adds transition in and transition out animations to a single element. Different from ReactCSSTransitionGroup in that it is designed for the one element, and not with inserting and removing child nodes.
+
+Your child element should by default have its own entrance animation CSS property so it is animated in when mounted, and have a leaving animation when it contains the class name `leaving`.
 
 ```js
 React.createClass({
-    mixins: [TransitionInOut],
-    animateOutClassName: 'leaving', // Optional, defaults to 'leaving'
     render() {
         return (
-            <div className='fade'>
-                I was transitioned!
-            </div>
-        );
+            <TransitionInOut>
+                <div className='fade'>
+                    I was transitioned!
+                </div>
+            </TransitionInOut>
+        )
     }
-    ...
 });
 ```
 
@@ -99,9 +100,15 @@ React.createClass({
 }
 ```
 
-Similar to TweenState, if a component is animating with tween state, that is a child component of the TransitionInOut element, it will be removed from the transition animation to stop artifacts.
+It is possible to modify the className using the `animateOutClassName` property.
+
+This element can contain TweenState components as subchildren, and if the children are animated at the same time as the TransitionInOut component is entering or leaving, the animated elements will be hidden from the TransitionInOut so you won't see duplicates.
 
 # Notes
+
+* Both these components will not introduce extra elements into your DOM
+* Both components accept only one child, and will throw an error if more children are added
+  * The child element can contain multiple children as usual
 
 ## Browser Support
 
