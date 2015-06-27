@@ -1,3 +1,7 @@
+.table-title, .table-value {
+  font: 1.618rem "Helvetica", "Arimo", "Arial", "sans";
+  vertical-align: top; }
+
 @-webkit-keyframes fade-in {
   0% {
     opacity: 0; } }
@@ -14,31 +18,14 @@
   100% {
     opacity: 0; } }
 
-.details-table__title, .details-table__value {
-  font: 1.618rem "Helvetica", "Arimo", "Arial", "sans";
-  vertical-align: top; }
+.details-container, .details__details-container {
+  overflow-y: scroll; }
 
-.details-table {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  border: 0;
-  border-spacing: 1rem;
-  vertical-align: top; }
-  .details-table__title {
-    font-weight: 100;
-    text-align: right; }
-  .details-table__value {
-    font-weight: 700; }
-
-.details {
+.details, .frame__details {
   padding: 2.618rem;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   overflow-y: auto; }
   .details__image {
     -webkit-align-self: center;
@@ -50,10 +37,17 @@
   .details__details-container {
     -webkit-flex: 1;
     -ms-flex: 1;
-    flex: 1;
-    overflow-y: scroll; }
+    flex: 1; }
 
-.frame, .icon__frame, .view__frame {
+.details-table {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  border: 0;
+  border-spacing: 1rem;
+  vertical-align: top; }
+
+.frame, .icon__frame {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -62,7 +56,11 @@
   flex-direction: column;
   width: 100%;
   height: 100%; }
-  .frame__body {
+  .frame__frame-body {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1; }
+  .frame__details {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
@@ -119,6 +117,9 @@
     width: 100px;
     height: 100px; }
 
+.image, .details__image, .image-container__image {
+  z-index: 1; }
+
 .image-container {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -136,14 +137,12 @@
     min-height: 120px;
     min-width: 120px; }
 
-.image, .details__image, .image-container__image {
-  z-index: 1; }
-
 .label {
   display: block;
   padding: 0.618rem 0;
   color: white;
-  font: 900 0.618rem "Helvetica", "Arimo", "Arial", "sans";
+  font-weight: 900;
+  font-size: 0.618rem;
   text-align: center;
   text-transform: uppercase;
   z-index: 2; }
@@ -152,7 +151,7 @@
     padding: 2.618rem;
     text-align: center;
     color: white;
-    font: 2.618rem "Helvetica", "Arimo", "Arial", "sans";
+    font-size: 2.618rem;
     text-decoration: none; }
   .label--normal {
     background: #BDC3C7; }
@@ -200,6 +199,13 @@
   background: #ECF0F1;
   color: #7F8C8D; }
 
+.table-title {
+  font-weight: 100;
+  text-align: right; }
+
+.table-value {
+  font-weight: 700; }
+
 .view {
   position: fixed;
   display: -webkit-flex;
@@ -214,4 +220,5 @@
   right: 0; }
 
 body {
-  margin: 0; }
+  margin: 0;
+  font-family: "Helvetica", "Arimo", "Arial", "sans"; }
