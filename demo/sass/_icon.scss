@@ -12,7 +12,7 @@ $icon-scale-factor: 2.5 !default;
 	text-decoration: none;
 
 	&__frame {
-		@extend .frame !optional;
+		@extend .frame;
 
 		display: flex;
 		align-items: center;

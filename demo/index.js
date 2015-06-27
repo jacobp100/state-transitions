@@ -96,16 +96,16 @@ return /******/ (function(modules) { // webpackBootstrap
 				var type = _ref2.type;
 				return React.createElement(
 					Link,
-					{ className: 'icon', to: 'view', params: { id: id } },
+					{ key: id, className: 'icon', to: 'view', params: { id: id } },
 					React.createElement(
 						TweenState,
-						{ key: id, id: 'frame-' + id },
+						{ id: 'frame-' + id },
 						React.createElement(
 							'div',
 							{ className: 'frame frame--' + type },
 							React.createElement(
 								'div',
-								{ className: 'frame__body image-container' },
+								{ className: 'frame__frame-body image-container' },
 								React.createElement(
 									TweenState,
 									{ id: 'image-' + id },
@@ -135,7 +135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 					React.createElement('input', { type: 'text', className: 'search', placeholder: 'Search…', onChange: this.onChange }),
 					React.createElement(
 						'div',
-						{ className: 'link-view__items' },
+						null,
 						pokeItems
 					)
 				)
@@ -168,12 +168,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					React.createElement(
 						'td',
-						{ className: 'details-table__title' },
+						{ className: 'table-title' },
 						'Evolve Level'
 					),
 					React.createElement(
 						'td',
-						{ className: 'details-table__value' },
+						{ className: 'table-value' },
 						evolveLevel
 					)
 				), React.createElement(
@@ -181,12 +181,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					React.createElement(
 						'td',
-						{ className: 'details-table__title' },
+						{ className: 'table-title' },
 						'Evolve To'
 					),
 					React.createElement(
 						'td',
-						{ className: 'details-table__value' },
+						{ className: 'table-value' },
 						evolveTo
 					)
 				)];
@@ -198,12 +198,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					React.createElement(
 						'td',
-						{ className: 'details-table__title' },
+						{ className: 'table-title' },
 						'Levels'
 					),
 					React.createElement(
 						'td',
-						{ className: 'details-table__value' },
+						{ className: 'table-value' },
 						levels.join(', ')
 					)
 				);
@@ -215,12 +215,12 @@ return /******/ (function(modules) { // webpackBootstrap
 					null,
 					React.createElement(
 						'td',
-						{ className: 'details-table__title' },
+						{ className: 'table-title' },
 						'Probability'
 					),
 					React.createElement(
 						'td',
-						{ className: 'details-table__value' },
+						{ className: 'table-value' },
 						probability
 					)
 				);
@@ -234,10 +234,10 @@ return /******/ (function(modules) { // webpackBootstrap
 					{ className: 'view' },
 					React.createElement(
 						'div',
-						{ className: 'view__frame frame--' + type },
+						{ className: 'frame frame--' + type },
 						React.createElement(
 							'div',
-							{ className: 'details' },
+							{ className: 'frame__details' },
 							React.createElement(
 								TweenState,
 								{ id: 'image-' + id },
@@ -254,12 +254,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Name'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											name
 										)
 									),
@@ -268,12 +268,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Type'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											_.capitalize(type)
 										)
 									),
@@ -282,12 +282,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Attack'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											attack
 										)
 									),
@@ -296,12 +296,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Defense'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											defense
 										)
 									),
@@ -312,12 +312,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Moves'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											moves.map(_.capitalize).join(', ')
 										)
 									),
@@ -327,12 +327,12 @@ return /******/ (function(modules) { // webpackBootstrap
 										null,
 										React.createElement(
 											'td',
-											{ className: 'details-table__title' },
+											{ className: 'table-title' },
 											'Curve'
 										),
 										React.createElement(
 											'td',
-											{ className: 'details-table__value' },
+											{ className: 'table-value' },
 											curve
 										)
 									)

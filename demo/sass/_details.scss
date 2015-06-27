@@ -1,14 +1,13 @@
 @import 'image';
+@import 'details-container';
 
 .details {
 	padding: $mod-2;
 	display: flex;
-	flex: 1;
 	overflow-y: auto;
 
 	&__image {
-		@extend .image !optional;
-
+		@extend .image;
 		align-self: center;
 		min-width: 400px;
 		height: 400px;
@@ -16,9 +15,7 @@
 	}
 
 	&__details-container {
-		@extend .details-container !optional;
-
+		@extend .details-container;
 		flex: 1;
-		overflow-y: scroll;
 	}
 }

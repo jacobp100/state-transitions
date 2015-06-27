@@ -29,10 +29,10 @@ const List = React.createClass({
 			.pick(({ name }) => (
 				_.includes(name.toLowerCase(), search)
 			)).mapValues(({ name, type }, id) => (
-				<Link className={ `icon` } to={ 'view' } params={{ id }}>
-					<TweenState key={ id } id={ `frame-${id}` }>
+				<Link key={ id } className={ `icon` } to={ 'view' } params={{ id }}>
+					<TweenState id={ `frame-${id}` }>
 						<div className={ `frame frame--${type}` }>
-							<div className='frame__body image-container'>
+							<div className='frame__frame-body image-container'>
 								<TweenState id={ `image-${id}` }>
 									<img className='image-container__image' src={ `img/${id}.png` } />
 								</TweenState>
@@ -53,7 +53,7 @@ const List = React.createClass({
 			<TransitionInOut animateOutClassName='link-view--leaving'>
 				<div className='link-view'>
 					<input type='text' className='search' placeholder='Search&hellip;' onChange={ this.onChange } />
-					<div className='link-view__items'>
+					<div>
 						{ pokeItems }
 					</div>
 				</div>
@@ -73,12 +73,12 @@ const View = React.createClass({
 		if (evolveLevel !== undefined && evolveTo !== undefined) {
 			evolveElement = [
 				<tr>
-					<td className='details-table__title'>Evolve Level</td>
-					<td className='details-table__value'>{ evolveLevel }</td>
+					<td className='table-title'>Evolve Level</td>
+					<td className='table-value'>{ evolveLevel }</td>
 				</tr>,
 				<tr>
-					<td className='details-table__title'>Evolve To</td>
-					<td className='details-table__value'>{ evolveTo }</td>
+					<td className='table-title'>Evolve To</td>
+					<td className='table-value'>{ evolveTo }</td>
 				</tr>
 			];
 		}
@@ -86,8 +86,8 @@ const View = React.createClass({
 		if (levels !== undefined) {
 			levelsElement = (
 				<tr>
-					<td className='details-table__title'>Levels</td>
-					<td className='details-table__value'>{ levels.join(', ') }</td>
+					<td className='table-title'>Levels</td>
+					<td className='table-value'>{ levels.join(', ') }</td>
 				</tr>
 			);
 		}
@@ -95,8 +95,8 @@ const View = React.createClass({
 		if (probability !== undefined) {
 			probabilityElement = (
 				<tr>
-					<td className='details-table__title'>Probability</td>
-					<td className='details-table__value'>{ probability }</td>
+					<td className='table-title'>Probability</td>
+					<td className='table-value'>{ probability }</td>
 				</tr>
 			);
 		}
@@ -104,39 +104,39 @@ const View = React.createClass({
 		return (
 			<TweenState id={ `frame-${id}` }>
 				<div className={ `view` }>
-					<div className={ `view__frame frame--${type}` }>
-						<div className={ `details` }>
+					<div className={ `frame frame--${type}` }>
+						<div className={ `frame__details` }>
 							<TweenState id={ `image-${id}` }>
 								<img className='details__image' src={ `img/${id}.png` } />
 							</TweenState>
 							<div className='details__details-container'>
 								<table className='details-table'>
 									<tr>
-										<td className='details-table__title'>Name</td>
-										<td className='details-table__value'>{ name }</td>
+										<td className='table-title'>Name</td>
+										<td className='table-value'>{ name }</td>
 									</tr>
 									<tr>
-										<td className='details-table__title'>Type</td>
-										<td className='details-table__value'>{ _.capitalize(type) }</td>
+										<td className='table-title'>Type</td>
+										<td className='table-value'>{ _.capitalize(type) }</td>
 									</tr>
 									<tr>
-										<td className='details-table__title'>Attack</td>
-										<td className='details-table__value'>{ attack }</td>
+										<td className='table-title'>Attack</td>
+										<td className='table-value'>{ attack }</td>
 									</tr>
 									<tr>
-										<td className='details-table__title'>Defense</td>
-										<td className='details-table__value'>{ defense }</td>
+										<td className='table-title'>Defense</td>
+										<td className='table-value'>{ defense }</td>
 									</tr>
 									{ levelsElement }
 									{ evolveElement }
 									<tr>
-										<td className='details-table__title'>Moves</td>
-										<td className='details-table__value'>{ moves.map(_.capitalize).join(', ') }</td>
+										<td className='table-title'>Moves</td>
+										<td className='table-value'>{ moves.map(_.capitalize).join(', ') }</td>
 									</tr>
 									{ probabilityElement }
 									<tr>
-										<td className='details-table__title'>Curve</td>
-										<td className='details-table__value'>{ curve }</td>
+										<td className='table-title'>Curve</td>
+										<td className='table-value'>{ curve }</td>
 									</tr>
 								</table>
 							</div>

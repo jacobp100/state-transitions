@@ -2,7 +2,8 @@
 	display: block;
 	padding: 0.618rem 0;
 	color: white;
-	font: 900 0.618rem $font-family;
+	font-weight: 900;
+	font-size: 0.618rem;
 	text-align: center;
 	text-transform: uppercase;
 	z-index: 2;
@@ -12,7 +13,7 @@
 		padding: $mod-2;
 		text-align: center;
 		color: white;
-		font: $mod-2 $font-family;
+		font-size: $mod-2;
 		text-decoration: none;
 	}
 
