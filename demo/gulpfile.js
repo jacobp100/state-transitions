@@ -6,7 +6,7 @@ var importOnce = require('node-sass-import-once');
 var autoprefixer = require('gulp-autoprefixer');
 
 var sassPath = 'sass';
-var sassRoot = sassPath + '/app.scss'
+var sassRoot = sassPath + '/app.scss';
 
 gulp.task('default', ['sass']);
 gulp.task('watch', function() {

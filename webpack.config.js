@@ -1,19 +1,17 @@
-const path = require('path');
-
 module.exports = {
   context: __dirname,
   entry: './src/index',
   devtool: 'source-map',
+  target: 'node',
+  externals: {
+    'react': true,
+    'react-dom': true,
+    'lodash': true,
+  },
   output: {
     filename: 'index.js',
-    library: 'reanimate-demo',
+    library: 'state-transitions',
     libraryTarget: 'umd',
-  },
-  resolve: {
-    alias: {
-      'react': path.resolve('./node_modules/react'),
-      'react-dom': path.resolve('./node_modules/react-dom'),
-    },
   },
   module: {
     loaders: [
@@ -21,10 +19,6 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-      },
-      {
-        test: /\.json$/,
-        loader: 'json',
       },
     ],
   },
