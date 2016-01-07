@@ -1,6 +1,6 @@
 # React State Transitions
 
-Version 3.0.0.
+Version 2.1.0.
 
 Provides a set of components to animate between elements when the view re-renders. Pretty much any method of view handling should work, and the demo uses ReactRouter.
 
