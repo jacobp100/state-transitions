@@ -1,0 +1,15 @@
+.table {
+  font: $mod-1 $font-family;
+  border: 0;
+  border-spacing: $mod-0;
+  vertical-align: top;
+
+  &__title {
+  	font-weight: 100;
+  	text-align: right;
+  }
+
+  &__value {
+  	font-weight: 700;
+  }
+}

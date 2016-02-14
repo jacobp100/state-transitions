@@ -1,0 +1,21 @@
+.details {
+	padding: $mod-2;
+	display: flex;
+	overflow-y: auto;
+
+	&__image {
+		align-self: center;
+		min-width: 400px;
+		height: 400px;
+		z-index: 1;
+	}
+
+	&__table-container {
+		flex: 1;
+		overflow-y: scroll;
+	}
+
+	&__table {
+		flex: 1;
+	}
+}

@@ -1,0 +1,94 @@
+header h1, header h2 {
+  color: white;
+  margin: 0.5em 0;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 0.1em rgba(0, 0, 0, 0.2); }
+
+.button-modal__close, .button-modal__buy {
+  position: absolute;
+  box-sizing: content-box;
+  color: white;
+  height: 1em;
+  border: 0;
+  margin: 0; }
+
+body {
+  background: #eee;
+  margin: 0; }
+
+header {
+  padding: 25px;
+  width: 500px;
+  margin: 0 auto 150px;
+  font-family: 'Helvetica', 'Arimo';
+  background: #12495D; }
+  header h1 {
+    margin-left: 0.075em;
+    font-weight: 300;
+    font-size: 1em;
+    letter-spacing: 0.075em; }
+  header h2 {
+    margin-left: 0.88em;
+    font-weight: 900;
+    font-size: 1.5em;
+    letter-spacing: 0.88em; }
+
+.boutique {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .boutique__image {
+    height: 100%; }
+
+.button-modal {
+  position: relative;
+  width: 150px;
+  height: 200px;
+  margin-right: -1px; }
+  .button-modal__button {
+    width: 100%;
+    height: 100%;
+    background: white;
+    color: white;
+    padding: 0;
+    border: 1px solid #BE890A;
+    font-size: 1rem; }
+  .button-modal__modal {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    top: -75px;
+    left: -75px;
+    background: #BE890A;
+    color: white;
+    border: 1px solid #BE890A;
+    font-size: 1rem;
+    z-index: 1; }
+  .button-modal__close {
+    top: -0.333em;
+    left: -0.5em;
+    background: #12495D;
+    padding: 0.333em 1em 0.5em;
+    font-size: 1em;
+    text-shadow: 0 2pt rgba(0, 0, 0, 0.2); }
+  .button-modal__buy {
+    bottom: -0.75em;
+    right: -0.75em;
+    background: #BE890A;
+    padding: 0.5em 1.5em 0.75em;
+    font-size: 1.5em;
+    text-shadow: 0 2pt rgba(0, 0, 0, 0.1); }
+
+.tween-state-animating-to.button-modal__button {
+  z-index: 1; }
+
+.tween-state-animating-to.button-modal__modal {
+  z-index: 2; }
+
+.tween-state-animating-from .button-modal__close,
+.tween-state-animating-from .button-modal__buy {
+  display: none; }

@@ -1,0 +1,11 @@
+$icon-scale-factor: 2.5 !default;
+
+.icon {
+	display: inline-block;
+	margin: $mod-0;
+	vertical-align: top;
+	width: $icon-scale-factor * 3rem;
+	height: $icon-scale-factor * 4rem;
+	overflow: visible;
+	text-decoration: none;
+}

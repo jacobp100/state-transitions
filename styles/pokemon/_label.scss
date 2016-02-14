@@ -1,0 +1,62 @@
+.label {
+	display: block;
+	padding: 0.618rem 0;
+	color: white;
+	font-weight: 900;
+	font-size: 0.618rem;
+	text-align: center;
+	text-transform: uppercase;
+	z-index: 2;
+
+	&--huge {
+		display: block;
+		padding: $mod-2;
+		text-align: center;
+		color: white;
+		font-size: $mod-2;
+		text-decoration: none;
+	}
+
+	&--normal {
+		background: #BDC3C7;
+	}
+	&--fire {
+		background: #D15419;
+	}
+	&--grass {
+		background: #8FAF30;
+	}
+	&--water {
+		background: #2F81B7;
+	}
+	&--ice {
+		background: #9AACD3;
+	}
+	&--electric {
+		background: #FDA729;
+	}
+	&--poison {
+		background: #4E2C4E;
+	}
+	&--ground {
+		background: #D4C197;
+	}
+	&--bug {
+		background: #D7555C;
+	}
+	&--psychic {
+		background: #8D48AB;
+	}
+	&--fighting {
+		background: #376271;
+	}
+	&--ghost {
+		background: #262626;
+	}
+	&--rock {
+		background: #503B2D;
+	}
+	&--dragon {
+		background: #BE3A31;
+	}
+}

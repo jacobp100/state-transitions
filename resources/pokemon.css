@@ -1,7 +1,3 @@
-.table-title, .table-value {
-  font: 1.618rem "Helvetica", "Arimo", "Arial", "sans";
-  vertical-align: top; }
-
 @-webkit-keyframes fade-in {
   0% {
     opacity: 0; } }
@@ -18,10 +14,7 @@
   100% {
     opacity: 0; } }
 
-.details-container, .details__details-container {
-  overflow-y: scroll; }
-
-.details, .frame__details {
+.details {
   padding: 2.618rem;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -34,20 +27,17 @@
     min-width: 400px;
     height: 400px;
     z-index: 1; }
-  .details__details-container {
+  .details__table-container {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    overflow-y: scroll; }
+  .details__table {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
 
-.details-table {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  border: 0;
-  border-spacing: 1rem;
-  vertical-align: top; }
-
-.frame, .icon__frame {
+.frame {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
@@ -56,11 +46,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%; }
-  .frame__frame-body {
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1; }
-  .frame__details {
+  .frame__body {
     -webkit-flex: 1;
     -ms-flex: 1;
     flex: 1; }
@@ -104,21 +90,6 @@
   height: 10rem;
   overflow: visible;
   text-decoration: none; }
-  .icon__frame {
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-align-items: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -webkit-justify-content: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    width: 100px;
-    height: 100px; }
-
-.image, .details__image, .image-container__image {
-  z-index: 1; }
 
 .image-container {
   display: -webkit-flex;
@@ -135,7 +106,8 @@
   justify-content: center; }
   .image-container__image {
     min-height: 120px;
-    min-width: 120px; }
+    min-width: 120px;
+    z-index: 1; }
 
 .label {
   display: block;
@@ -199,12 +171,16 @@
   background: #ECF0F1;
   color: #7F8C8D; }
 
-.table-title {
-  font-weight: 100;
-  text-align: right; }
-
-.table-value {
-  font-weight: 700; }
+.table {
+  font: 1.618rem "Helvetica", "Arimo", "Arial", "sans";
+  border: 0;
+  border-spacing: 1rem;
+  vertical-align: top; }
+  .table__title {
+    font-weight: 100;
+    text-align: right; }
+  .table__value {
+    font-weight: 700; }
 
 .view {
   position: fixed;
