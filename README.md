@@ -69,6 +69,8 @@ When using TweenState, the entire element including subelements is copied, so it
 
 It is possible to nest TweenState components, with all components animating, and child TweenState components will be hidden from their parents so you don't see duplicate elements.
 
+Should you need to, you can target elements tweening to and from via the classnames `tween-state-animating tween-state-animating-to` and `tween-state-animating tween-state-animating-from`. These can be overridden with the properties `animateToClassName` and `animateFromClassName`, respectively.
+
 # Animate In Out
 
 Adds transition in and transition out animations to a single element. Different from ReactCSSTransitionGroup in that it is designed for the one element, and not with inserting and removing child nodes.
@@ -101,6 +103,8 @@ class Component extends React.Component {
 /* Keyframe definitions */
 @keyframes fade-in { 0% { opacity: 0 } 100% { opacity: 1 } }
 @-webkit-keyframes fade-in { 0% { opacity: 0 } 100% { opacity: 1 } }
+@keyframes fade-out { 0% { opacity: 1 } 100% { opacity: 0 } }
+@-webkit-keyframes fade-out { 0% { opacity: 1 } 100% { opacity: 0 } }
 ```
 
 It is possible to modify the className using the `animateOutClassName` property.
@@ -125,9 +129,16 @@ class MainRouteComponent extends React.Component {
 
 # Notes
 
-* Both these components will not introduce extra elements into your DOM
+* Both these components will introduce extra elements into your `<body />` only for the duration of the transition
+  * They will not affect your React DOM, and the `data-_react-id`s are stripped to ensure this
 * Both components accept only one child, and will throw an error if more children are added
   * The child element can contain multiple children as usual
+
+## Z-Indexes
+
+For both these components, the duplicates are placed in a container element in the body. This has some unfortunate effects on z-indexes.
+
+An example of z-index conflicts can occur when transitioning to element B, with both contained in element C, where C is a positioning context. In the case of element A and B having z-index: 1, and C z-index: 10, in normal layout, elements A and B would show above C. However, during the transition, elements A and B will be placed in the body. Since they have a lower z-index than C, C will overlap. However, if we set A and B to have z-index: 11, the normal layout is unaffected. However, when transitioning, they will have a higher z-index than C, and show above it (as intended).
 
 ## Issues with Webpack
 
@@ -136,8 +147,8 @@ If this library is not working, it's very probable that webpack is trying to inc
 ```js
 resolve: {
   alias: {
-  'react': path.resolve('./node_modules/react'),
-  'react-dom': path.resolve('./node_modules/react-dom'),
+    'react': path.resolve('./node_modules/react'),
+    'react-dom': path.resolve('./node_modules/react-dom'),
   },
 },
 ```

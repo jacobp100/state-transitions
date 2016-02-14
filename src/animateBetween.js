@@ -14,7 +14,21 @@ function removeAnimatingElements(clone) {
   };
 }
 
-function animateElement({ toRect, fromRect, originalElement, toElement, fromElement, duration, timingFunction, delay, fadeOutDuration, fadeOutTimingFunction, fadeOutDelay }) {
+function animateElement({
+  toRect,
+  fromRect,
+  originalElement,
+  toElement,
+  fromElement,
+  duration,
+  timingFunction,
+  delay,
+  fadeOutDuration,
+  fadeOutTimingFunction,
+  fadeOutDelay,
+  animateFromClassName,
+  animateToClassName,
+}) {
   const container = document.createElement('div');
 
   const fromClone = fromElement;
@@ -53,6 +67,9 @@ function animateElement({ toRect, fromRect, originalElement, toElement, fromElem
   if (!toClone.style.transitionProperty) {
     return; // Transitions not supported;
   }
+
+  fromClone.classList.add(...animateFromClassName.split(' '));
+  toClone.classList.add(...animateToClassName.split(' '));
 
   document.body.appendChild(container);
 
@@ -147,6 +164,8 @@ export default function animateBetween(from, to) {
     fadeOutDuration: to.fadeOutDuration,
     fadeOutTimingFunction: to.fadeOutTimingFunction,
     fadeOutDelay: to.fadeOutDelay,
+    animateFromClassName: to.animateFromClassName,
+    animateToClassName: to.animateToClassName,
     toRect: to.toElement.rect,
     fromRect: from.fromElement.rect,
     toElement: createClone(to.toElement),

@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import Router, { Route, IndexRoute } from 'react-router';
 
-import List from './List';
-import View from './View';
+import List from './src/List';
+import View from './src/View';
 
 
 class App extends React.Component {

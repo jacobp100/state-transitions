@@ -2,11 +2,10 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var importOnce = require('node-sass-import-once');
 var autoprefixer = require('gulp-autoprefixer');
 
-var sassPath = 'sass';
-var sassRoot = sassPath + '/app.scss';
+var sassPath = 'demos/styles';
+var sassRoot = sassPath + '/*.scss';
 
 gulp.task('default', ['sass']);
 gulp.task('watch', function() {
@@ -15,17 +14,10 @@ gulp.task('watch', function() {
 
 gulp.task('sass', function() {
 	return gulp.src(sassRoot)
-		.pipe(sass({
-			importer: importOnce,
-			importOnce: {
-				index: false,
-				css: false,
-				bower: false
-			}
-		}).on('error', sass.logError))
+		.pipe(sass().on('error', sass.logError))
 		.pipe(autoprefixer({
 			browsers: ['last 2 versions'],
 			cascade: false
 		}))
-		.pipe(gulp.dest('./'));
+		.pipe(gulp.dest('./demos/resources/'));
 });

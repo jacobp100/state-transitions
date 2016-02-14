@@ -6,12 +6,26 @@ import { OPACITY_MANAGED_BY_TWEEN } from './constants';
 import { transitionTo, transitionFrom } from './itemTransition';
 
 
+const contextProps = [
+  'duration',
+  'timingFunction',
+  'delay',
+  'fadeOutDuration',
+  'fadeOutTimingFunction',
+  'fadeOutDelay',
+  'animateFromClassName',
+  'animateToClassName',
+];
+
 export default class TweenState extends React.Component {
   componentDidMount() {
     // React doesn't provide a 'whole view just loaded' handler. To work around this, we use a setTimeout, which will be fired after this happens. However, this does mean that this element will flash on the screen, so we have to temporarily hide it. This has to be done regardless of whether the element will be animated.
     const originalElement = findDOMNode(this);
     const toElement = serializeNode(originalElement, this.props.id);
-    const context = assign({ toElement, originalElement }, pick(this.props, 'duration', 'timingFunction', 'delay', 'fadeOutDuration', 'fadeOutTimingFunction', 'fadeOutDelay'));
+    const context = assign(
+      { toElement, originalElement },
+      pick(this.props, contextProps)
+    );
 
     originalElement.style.opacity = 0;
 
@@ -66,6 +80,8 @@ TweenState.propTypes = {
   fadeOutDuration: React.PropTypes.number,
   fadeOutTimingFunction: React.PropTypes.string,
   fadeOutDelay: React.PropTypes.number,
+  animateFromClassName: React.PropTypes.string,
+  animateToClassName: React.PropTypes.string,
   children: React.PropTypes.object,
 };
 TweenState.defaultProps = {
@@ -75,4 +91,6 @@ TweenState.defaultProps = {
   fadeOutDuration: 0,
   fadeOutTimingFunction: 'ease-in',
   fadeOutDelay: 0,
+  animateFromClassName: 'tween-state-animating tween-state-animating-from',
+  animateToClassName: 'tween-state-animating tween-state-animating-to',
 };

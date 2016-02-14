@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import { TweenState, AnimateInOut } from '../../src/index';
+import { TweenState, AnimateInOut } from '../../../src/index';
 
 import pokemon from '../data/pokemon.json';
 
@@ -28,9 +28,9 @@ export default class List extends React.Component {
         <Link key={ id } className={ `icon` } to={ `view/${id}` }>
           <TweenState id={ `frame-${id}` }>
             <div className={ `frame frame--${type}` }>
-              <div className="frame__frame-body image-container">
+              <div className="frame__body image-container">
                 <TweenState id={ `image-${id}` }>
-                  <img className="image-container__image" src={ `img/${id}.png` } />
+                  <img className="image-container__image" src={ `resources/pokemon/images/${id}.png` } />
                 </TweenState>
               </div>
               <TweenState id={ `label-${id}` }>

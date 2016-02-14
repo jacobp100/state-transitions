@@ -1,14 +1,17 @@
-const path = require('path');
+var path = require('path');
 
 module.exports = {
   context: __dirname,
-  entry: './src/index',
-  devtool: 'source-map',
+  entry: {
+    pokemon: './demos/pokemon',
+    buttonModal: './demos/button-modal',
+  },
   output: {
-    filename: 'index.js',
-    library: 'reanimate-demo',
+    filename: './demos/dist/[name].js',
+    library: 'demo',
     libraryTarget: 'umd',
   },
+  devtool: 'source-map',
   resolve: {
     alias: {
       'react': path.resolve('./node_modules/react'),

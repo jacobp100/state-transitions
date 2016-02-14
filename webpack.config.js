@@ -3,15 +3,15 @@ module.exports = {
   entry: './src/index',
   devtool: 'source-map',
   target: 'node',
-  externals: {
-    'react': true,
-    'react-dom': true,
-    'lodash': true,
-  },
   output: {
     filename: 'index.js',
     library: 'state-transitions',
     libraryTarget: 'umd',
+  },
+  externals: {
+    'react': true,
+    'react-dom': true,
+    'lodash': true,
   },
   module: {
     loaders: [

@@ -1,5 +1,3 @@
-@import 'image';
-
 .image-container {
 	display: flex;
 	flex-direction: column;
@@ -7,9 +5,9 @@
 	justify-content: center;
 
 	&__image {
-		@extend .image;
 		// When viewing non-locally on Safari 8, an image would load with dimensions 0x0, despite being preloaded. This would cause the animation to transition the images down to zero-size, then flicker back to the actual size.
 		min-height: 120px;
 		min-width: 120px;
+		z-index: 1;
 	}
 }

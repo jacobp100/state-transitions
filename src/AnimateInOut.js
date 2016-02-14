@@ -5,7 +5,7 @@ import elementCommunicator from './elementCommunicator';
 import { requestNextAnimationFrame, serializeNode, createClone } from './util';
 
 
-export default class TransitionInOut extends React.Component {
+export default class AnimateInOut extends React.Component {
   componentWillUnmount() {
     // The gist here is that we clone the element in place and assign a 'leave' animation to it. When the animation finishes, we remove the clone from the dom.
     const originalElement = findDOMNode(this);
@@ -15,7 +15,7 @@ export default class TransitionInOut extends React.Component {
 
     transitionOutElement.style.top = transitionElement.rect.top + 'px';
     transitionOutElement.style.left = transitionElement.rect.left + 'px';
-    transitionOutElement.classList.add(this.props.animateOutClassName);
+    transitionOutElement.classList.add(...this.props.animateOutClassName.split(' '));
 
 
     // Same as in animateElements
@@ -65,10 +65,10 @@ export default class TransitionInOut extends React.Component {
   }
 }
 
-TransitionInOut.propTypes = {
+AnimateInOut.propTypes = {
   animateOutClassName: React.PropTypes.string,
   children: React.PropTypes.object,
 };
-TransitionInOut.defaultProps = {
+AnimateInOut.defaultProps = {
   animateOutClassName: 'leaving',
 };

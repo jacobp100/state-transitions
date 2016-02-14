@@ -1,7 +1,7 @@
 import React from 'react';
 import { capitalize } from 'lodash';
 import { Link } from 'react-router';
-import { TweenState } from '../../src/index';
+import { TweenState } from '../../../src/index';
 
 import pokemon from '../data/pokemon.json';
 
@@ -19,12 +19,12 @@ export default class View extends React.Component {
     if (evolveLevel !== undefined && evolveTo !== undefined) {
       evolveElement = [
         <tr key="0">
-          <td className="table-title">Evolve Level</td>
-          <td className="table-value">{ evolveLevel }</td>
+          <td className="table__title">Evolve Level</td>
+          <td className="table__value">{ evolveLevel }</td>
         </tr>,
         <tr key="1">
-          <td className="table-title">Evolve To</td>
-          <td className="table-value">{ evolveTo }</td>
+          <td className="table__title">Evolve To</td>
+          <td className="table__value">{ evolveTo }</td>
         </tr>,
       ];
     }
@@ -32,8 +32,8 @@ export default class View extends React.Component {
     if (levels !== undefined) {
       levelsElement = (
         <tr>
-          <td className="table-title">Levels</td>
-          <td className="table-value">{ levels.join(', ') }</td>
+          <td className="table__title">Levels</td>
+          <td className="table__value">{ levels.join(', ') }</td>
         </tr>
       );
     }
@@ -41,8 +41,8 @@ export default class View extends React.Component {
     if (probability !== undefined) {
       probabilityElement = (
         <tr>
-          <td className="table-title">Probability</td>
-          <td className="table-value">{ probability }</td>
+          <td className="table__title">Probability</td>
+          <td className="table__value">{ probability }</td>
         </tr>
       );
     }
@@ -51,39 +51,39 @@ export default class View extends React.Component {
       <TweenState id={ `frame-${id}` }>
         <div className={ `view` }>
           <div className={ `frame frame--${type}` }>
-            <div className={ `frame__details` }>
+            <div className={ `frame__body details` }>
               <TweenState id={ `image-${id}` }>
-                <img className="details__image" src={ `img/${id}.png` } />
+                <img className="details__image" src={ `resources/pokemon/images/${id}.png` } />
               </TweenState>
-              <div className="details__details-container">
-                <table className="details-table">
+              <div className="details__table-container">
+                <table className="details__table table">
                   <tbody>
                     <tr>
-                      <td className="table-title">Name</td>
-                      <td className="table-value">{ name }</td>
+                      <td className="table__title">Name</td>
+                      <td className="table__value">{ name }</td>
                     </tr>
                     <tr>
-                      <td className="table-title">Type</td>
-                      <td className="table-value">{ capitalize(type) }</td>
+                      <td className="table__title">Type</td>
+                      <td className="table__value">{ capitalize(type) }</td>
                     </tr>
                     <tr>
-                      <td className="table-title">Attack</td>
-                      <td className="table-value">{ attack }</td>
+                      <td className="table__title">Attack</td>
+                      <td className="table__value">{ attack }</td>
                     </tr>
                     <tr>
-                      <td className="table-title">Defense</td>
-                      <td className="table-value">{ defense }</td>
+                      <td className="table__title">Defense</td>
+                      <td className="table__value">{ defense }</td>
                     </tr>
                     { levelsElement }
                     { evolveElement }
                     <tr>
-                      <td className="table-title">Moves</td>
-                      <td className="table-value">{ moves.map(capitalize).join(', ') }</td>
+                      <td className="table__title">Moves</td>
+                      <td className="table__value">{ moves.map(capitalize).join(', ') }</td>
                     </tr>
                     { probabilityElement }
                     <tr>
-                      <td className="table-title">Curve</td>
-                      <td className="table-value">{ curve }</td>
+                      <td className="table__title">Curve</td>
+                      <td className="table__value">{ curve }</td>
                     </tr>
                   </tbody>
                 </table>
