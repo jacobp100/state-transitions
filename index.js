@@ -65,7 +65,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, 'AnimateInOut', {
 	  enumerable: true,
 	  get: function get() {
-	    return _AnimateInOut.default;
+	    return _interopRequireDefault(_AnimateInOut).default;
 	  }
 	});
 	
@@ -74,9 +74,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, 'TweenState', {
 	  enumerable: true,
 	  get: function get() {
-	    return _TweenState.default;
+	    return _interopRequireDefault(_TweenState).default;
 	  }
 	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
 /* 1 */
@@ -84,11 +86,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(2);
 	
@@ -106,25 +108,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TransitionInOut = (function (_React$Component) {
-	  _inherits(TransitionInOut, _React$Component);
+	var AnimateInOut = function (_React$Component) {
+	  _inherits(AnimateInOut, _React$Component);
 	
-	  function TransitionInOut() {
-	    _classCallCheck(this, TransitionInOut);
+	  function AnimateInOut() {
+	    _classCallCheck(this, AnimateInOut);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TransitionInOut).apply(this, arguments));
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AnimateInOut).apply(this, arguments));
 	  }
 	
-	  _createClass(TransitionInOut, [{
+	  _createClass(AnimateInOut, [{
 	    key: 'componentWillUnmount',
 	    value: function componentWillUnmount() {
-	      var _this2 = this;
+	      var _transitionOutElement,
+	          _this2 = this;
 	
 	      // The gist here is that we clone the element in place and assign a 'leave' animation to it. When the animation finishes, we remove the clone from the dom.
 	      var originalElement = (0, _reactDom.findDOMNode)(this);
@@ -134,7 +139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      transitionOutElement.style.top = transitionElement.rect.top + 'px';
 	      transitionOutElement.style.left = transitionElement.rect.left + 'px';
-	      transitionOutElement.classList.add(this.props.animateOutClassName);
+	      (_transitionOutElement = transitionOutElement.classList).add.apply(_transitionOutElement, _toConsumableArray(this.props.animateOutClassName.split(' ')));
 	
 	      // Same as in animateElements
 	      function removeAnimatingElements(id) {
@@ -181,16 +186,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 	
-	  return TransitionInOut;
-	})(_react2.default.Component);
+	  return AnimateInOut;
+	}(_react2.default.Component);
 	
-	exports.default = TransitionInOut;
+	exports.default = AnimateInOut;
 	
-	TransitionInOut.propTypes = {
+	
+	AnimateInOut.propTypes = {
 	  animateOutClassName: _react2.default.PropTypes.string,
 	  children: _react2.default.PropTypes.object
 	};
-	TransitionInOut.defaultProps = {
+	AnimateInOut.defaultProps = {
 	  animateOutClassName: 'leaving'
 	};
 
@@ -308,11 +314,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(2);
 	
@@ -336,7 +342,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var TweenState = (function (_React$Component) {
+	var contextProps = ['duration', 'timingFunction', 'delay', 'fadeOutDuration', 'fadeOutTimingFunction', 'fadeOutDelay', 'animateFromClassName', 'animateToClassName'];
+	
+	var TweenState = function (_React$Component) {
 	  _inherits(TweenState, _React$Component);
 	
 	  function TweenState() {
@@ -351,7 +359,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // React doesn't provide a 'whole view just loaded' handler. To work around this, we use a setTimeout, which will be fired after this happens. However, this does mean that this element will flash on the screen, so we have to temporarily hide it. This has to be done regardless of whether the element will be animated.
 	      var originalElement = (0, _reactDom.findDOMNode)(this);
 	      var toElement = (0, _util.serializeNode)(originalElement, this.props.id);
-	      var context = (0, _lodash.assign)({ toElement: toElement, originalElement: originalElement }, (0, _lodash.pick)(this.props, 'duration', 'timingFunction', 'delay', 'fadeOutDuration', 'fadeOutTimingFunction', 'fadeOutDelay'));
+	      var context = (0, _lodash.assign)({ toElement: toElement, originalElement: originalElement }, (0, _lodash.pick)(this.props, contextProps));
 	
 	      originalElement.style.opacity = 0;
 	
@@ -401,9 +409,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }]);
 	
 	  return TweenState;
-	})(_react2.default.Component);
+	}(_react2.default.Component);
 	
 	exports.default = TweenState;
+	
 	
 	TweenState.propTypes = {
 	  id: _react2.default.PropTypes.string.isRequired,
@@ -413,6 +422,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  fadeOutDuration: _react2.default.PropTypes.number,
 	  fadeOutTimingFunction: _react2.default.PropTypes.string,
 	  fadeOutDelay: _react2.default.PropTypes.number,
+	  animateFromClassName: _react2.default.PropTypes.string,
+	  animateToClassName: _react2.default.PropTypes.string,
 	  children: _react2.default.PropTypes.object
 	};
 	TweenState.defaultProps = {
@@ -421,7 +432,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  delay: 0,
 	  fadeOutDuration: 0,
 	  fadeOutTimingFunction: 'ease-in',
-	  fadeOutDelay: 0
+	  fadeOutDelay: 0,
+	  animateFromClassName: 'tween-state-animating tween-state-animating-from',
+	  animateToClassName: 'tween-state-animating tween-state-animating-to'
 	};
 
 /***/ },
@@ -486,6 +499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  var id = serial.toElement.id;
 	
+	
 	  if (!to[id]) {
 	    to[id] = serial;
 	    queueAnimation();
@@ -500,6 +514,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  var id = serial.fromElement.id;
+	
 	
 	  if (!from[id]) {
 	    from[id] = serial;
@@ -535,6 +550,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	// If an element and one of its subchildren is being transitioned, we don't want to animate both of them, else there will be duplicated artifacts. So we remove all child elements that are being animated. This pretty much has to be done with an event listener.
 	function removeAnimatingElements(clone) {
 	  return function (id) {
@@ -547,6 +564,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function animateElement(_ref) {
+	  var _fromClone$classList, _toClone$classList;
+	
 	  var toRect = _ref.toRect;
 	  var fromRect = _ref.fromRect;
 	  var originalElement = _ref.originalElement;
@@ -558,6 +577,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var fadeOutDuration = _ref.fadeOutDuration;
 	  var fadeOutTimingFunction = _ref.fadeOutTimingFunction;
 	  var fadeOutDelay = _ref.fadeOutDelay;
+	  var animateFromClassName = _ref.animateFromClassName;
+	  var animateToClassName = _ref.animateToClassName;
 	
 	  var container = document.createElement('div');
 	
@@ -596,6 +617,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (!toClone.style.transitionProperty) {
 	    return; // Transitions not supported;
 	  }
+	
+	  (_fromClone$classList = fromClone.classList).add.apply(_fromClone$classList, _toConsumableArray(animateFromClassName.split(' ')));
+	  (_toClone$classList = toClone.classList).add.apply(_toClone$classList, _toConsumableArray(animateToClassName.split(' ')));
 	
 	  document.body.appendChild(container);
 	
@@ -695,6 +719,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    fadeOutDuration: to.fadeOutDuration,
 	    fadeOutTimingFunction: to.fadeOutTimingFunction,
 	    fadeOutDelay: to.fadeOutDelay,
+	    animateFromClassName: to.animateFromClassName,
+	    animateToClassName: to.animateToClassName,
 	    toRect: to.toElement.rect,
 	    fromRect: from.fromElement.rect,
 	    toElement: (0, _util.createClone)(to.toElement),

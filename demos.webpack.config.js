@@ -4,7 +4,7 @@ module.exports = {
   context: __dirname,
   entry: {
     pokemon: './demos/pokemon',
-    buttonModal: './demos/button-modal',
+    buttonModal: './demos/dinosaur-boutique',
   },
   output: {
     filename: './demos/dist/[name].js',
