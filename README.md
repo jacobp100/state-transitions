@@ -136,7 +136,9 @@ class MainRouteComponent extends React.Component {
 
 ## Z-Indexes
 
-For both these components, the duplicates are placed in a container element in the body. This has some unfortunate effects on z-indexes.
+For both these components, the duplicates are placed in a container element in the body. This has some unfortunate effects on z-indexes. It's out of the scope of this readme to explain z-indexes, but make sure you know how they work before reading on. (mainly know they're not global for the document).
+
+If you always want an element to appear on top of another (like the modal in the dinosaur boutique example), you can set the z-index on the modal to something positive. However, when tweening, this will make the modal always appear over the top of the thing it's tweening between. To fix this, you'll have to adjust the z-indexes for all elements involved using the
 
 An example of z-index conflicts can occur when transitioning to element B, with both contained in element C, where C is a positioning context. In the case of element A and B having z-index: 1, and C z-index: 10, in normal layout, elements A and B would show above C. However, during the transition, elements A and B will be placed in the body. Since they have a lower z-index than C, C will overlap. However, if we set A and B to have z-index: 11, the normal layout is unaffected. However, when transitioning, they will have a higher z-index than C, and show above it (as intended).
 

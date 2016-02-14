@@ -53,7 +53,7 @@ export default class View extends React.Component {
           <div className={ `frame frame--${type}` }>
             <div className={ `frame__body details` }>
               <TweenState id={ `image-${id}` }>
-                <img className="details__image" src={ `resources/pokemon/images/${id}.png` } />
+                <img className="details__image" src={ `resources/pokemon/${id}.png` } />
               </TweenState>
               <div className="details__table-container">
                 <table className="details__table table">

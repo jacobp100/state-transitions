@@ -30,7 +30,7 @@ export default class List extends React.Component {
             <div className={ `frame frame--${type}` }>
               <div className="frame__body image-container">
                 <TweenState id={ `image-${id}` }>
-                  <img className="image-container__image" src={ `resources/pokemon/images/${id}.png` } />
+                  <img className="image-container__image" src={ `resources/pokemon/${id}.png` } />
                 </TweenState>
               </div>
               <TweenState id={ `label-${id}` }>
