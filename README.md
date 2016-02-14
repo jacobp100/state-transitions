@@ -6,7 +6,11 @@ Provides a set of components to animate between elements when the view re-render
 
 ![Demo](http://jacobp100.github.io/state-transitions/TweenState.gif)
 
-View the [demo](http://jacobp100.github.io/state-transitions/) before reading to get a gist of what animations you'll get.
+[Demo 1](http://jacobp100.github.io/state-transitions/pokemon.html)
+
+[Demo 2](http://jacobp100.github.io/state-transitions/dinosaur-boutique.html)
+
+View the demos before reading to get a gist of what animations you'll get.
 
 ```
 npm install --save state-transitions

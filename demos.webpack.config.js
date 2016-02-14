@@ -1,5 +1,7 @@
 var path = require('path');
 
+// You need to use Lodash 3 to compile these
+
 module.exports = {
   context: __dirname,
   entry: {
@@ -23,7 +25,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
+        loader: 'babel',
       },
       {
         test: /\.json$/,
