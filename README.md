@@ -1,6 +1,6 @@
 # React State Transitions
 
-Version 3.0.0.
+Version 2.1.0.
 
 Provides a set of components to animate between elements when the view re-renders. Pretty much any method of view handling should work, and the demo uses ReactRouter.
 
@@ -111,7 +111,7 @@ It is possible to modify the className using the `animateOutClassName` property.
 
 This element can contain TweenState components as children. In this case, the TweenState children will only be animated once using only the TweenState animation. They are removed from the AnimateInOut animation to avoid duplicates.
 
-If you are using this for animating pages in and out---and you do not want to use TweenState---this component should wrap each page individually (each page component should match the first example). Alternatively, if you want every page to be wrapped implicitly, and lose the ability to individually adjust transitions, the following (hack) will work for React Router:
+If you are using this for animating pages in and out—and you do not want to use TweenState—this component should wrap each page individually (each page component should match the first example). Alternatively, if you want every page to be wrapped implicitly, and lose the ability to individually adjust transitions, the following (hack) will work for React Router:
 
 ```js
 class MainRouteComponent extends React.Component {
